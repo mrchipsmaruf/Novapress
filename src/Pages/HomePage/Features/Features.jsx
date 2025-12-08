@@ -10,7 +10,7 @@ const Feature = () => {
 
         {/* Header */}
         <div className="text-center mb-16">
-          <span className=" font-semibold tracking-wider uppercase text-gray-900 text-sm">
+          <span className="inline-block py-1 px-4 rounded-full border border-gray-300 dark:border-gray-600 text-xs font-semibold uppercase bg-white dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark">
             Why Choose Novapress
           </span>
 
@@ -96,8 +96,8 @@ const Feature = () => {
                   "Heatmaps for high-priority infrastructure issues",
                   "Historical data analysis for better future planning",
                 ].map((text, i) => (
-                  <li key={i} className="flex items-start">
-                    <span className="material-icons-outlined text-yellow-400 mr-3 mt-1"><FaCheckCircle /></span>
+                  <li key={i} className="flex items-center">
+                    <span className="material-icons-outlined text-yellow-400 mr-3 "><FaCheckCircle /></span>
                     <span className="text-gray-700 dark:text-gray-300">{text}</span>
                   </li>
                 ))}

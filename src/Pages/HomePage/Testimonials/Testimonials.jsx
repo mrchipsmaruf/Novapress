@@ -54,15 +54,13 @@ export default function Testimonials() {
 
                     <div className="flex items-center gap-4 mt-8 md:mt-0">
                         <button
-                            className="swiper-button-prev-custom w-10 h-10 flex items-center justify-center 
-              border border-gray-300 rounded-full hover:bg-gray-200 transition"
+                            className="swiper-button-prev-custom w-10 h-10 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-200 transition"
                             aria-label="previous">
                             <span className="material-icons-outlined text-lg">chevron_left</span>
                         </button>
 
                         <button
-                            className="swiper-button-next-custom w-10 h-10 flex items-center justify-center 
-              border border-gray-300 rounded-full hover:bg-gray-200 transition"
+                            className="swiper-button-next-custom w-10 h-10 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-200 transition"
                             aria-label="next">
                             <span className="material-icons-outlined text-lg">chevron_right</span>
                         </button>
@@ -76,7 +74,7 @@ export default function Testimonials() {
                         prevEl: ".swiper-button-prev-custom",
                         nextEl: ".swiper-button-next-custom",
                     }}
-                    autoplay={{ delay: 3500, disableOnInteraction: false }}
+                    autoplay={{ delay: 2000, disableOnInteraction: false }}
                     loop={true}
                     spaceBetween={28}
                     breakpoints={{

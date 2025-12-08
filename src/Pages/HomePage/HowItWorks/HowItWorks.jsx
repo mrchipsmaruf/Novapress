@@ -2,12 +2,12 @@ import React from "react";
 
 const HowItWorks = () => {
     return (
-        <section className="py-15 px-4 sm:px-6 lg:px-8 bg-[#EBEBEB] dark:bg-[#0D0D0D] relative overflow-hidden">
+        <section className="pt-15 pb-6 px-4 sm:px-6 lg:px-8 bg-[#EBEBEB] dark:bg-[#0D0D0D] relative overflow-hidden">
             <div className="border-b pb-25 max-w-[1400px] mx-auto">
                 <div className="relative">
                     {/* Header */}
                     <div className="text-center mb-20">
-                        <h2 className="text-yellow-400 font-bold text-lg uppercase tracking-widest mb-3">
+                        <h2 className="inline-block py-1 px-4 rounded-full border border-gray-300 dark:border-gray-600 text-xs font-semibold uppercase bg-white dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark">
                             Process
                         </h2>
                         <h3 className="text-3xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">

@@ -1,8 +1,33 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/* Light Theme */
+@plugin "daisyui/theme" {
+  name: "silk";
+  default: true;
 
-body {
-  font-family: "Montserrat", sans-serif;
+  --color-primary: #FFF1AD;
+  --color-secondary: #343434;
+}
+
+/* Dark Theme */
+@plugin "daisyui/theme" {
+  name: "dark";
+
+  --color-primary: #6366f1;
+  --color-secondary: #14b8a6;
+}
+
+
+@layer base {
+
+  html,
+  body,
+  :root {
+    font-family: "Baloo Da 2", sans-serif !important;
+  }
+}
+
+.logoText {
+  font-family: "Caesar Dressing", system-ui;
 }

@@ -16,10 +16,10 @@ const Navbar = () => {
     }, []);
 
     let links = <>
-        <NavLink className={"hover:text-yellow-400 transition"}>Home</NavLink>
-        <NavLink className={"hover:text-yellow-400 transition"}>All Issues</NavLink>
-        <NavLink className={"hover:text-yellow-400 transition"}>About</NavLink>
-        <NavLink className={"hover:text-yellow-400 transition"}>Contact</NavLink>
+        <NavLink to={"/"} className={`${scrolled ? "text-white" : "text-black"} hover:text-yellow-400 transition`}>Home</NavLink>
+        <NavLink to={"all-issues"} className={`${scrolled ? "text-white" : "text-black"} hover:text-yellow-400 transition`}>All Issues</NavLink>
+        <NavLink to={"about"} className={`${scrolled ? "text-white" : "text-black"} hover:text-yellow-400 transition`}>Our Story</NavLink>
+        <NavLink to={"contact"} className={`${scrolled ? "text-white" : "text-black"} hover:text-yellow-400 transition`}>Contact</NavLink>
     </>
 
     return (
@@ -28,7 +28,7 @@ const Navbar = () => {
                 fixed top-0 left-0 w-full z-50 transition-all duration-300
                 ${scrolled ? "backdrop-blur-xl bg-black/30 shadow-lg" : "bg-transparent"}`}>
             <div className="max-w-[1400px] mx-auto">
-                <div className="flex items-center justify-between py-5 border-b border-white/30">
+                <div className="flex items-center justify-between py-5 border-b border-black/30">
 
                     {/* Logo */}
                     <div className="text-yellow-400">
@@ -36,7 +36,7 @@ const Navbar = () => {
                     </div>
 
                     {/* Desktop Links */}
-                    <div className="hidden lg:flex items-center gap-8 text-white">
+                    <div className="hidden lg:flex items-center gap-8 text-black">
                         {links}
                     </div>
 

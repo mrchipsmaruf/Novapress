@@ -123,7 +123,7 @@ const HowItWorks = () => {
 
                     {/* Bottom button */}
                     <div className="text-center mt-20">
-                        <button className="px-8 py-4 rounded-full bg-yellow-300 font-bold shadow-[0_0_20px_rgba(232,216,128,0.3)] flex hover:text-white items-center mx-auto gap-2 hover:bg-black/90">
+                        <button className="px-8 py-4 rounded-[7px] bg-yellow-300 font-bold shadow-[0_0_20px_rgba(232,216,128,0.3)] flex hover:text-white items-center mx-auto gap-2 hover:bg-black/90">
                             Report an Issue Now
                             <span className="material-icons-outlined">arrow_forward</span>
                         </button>

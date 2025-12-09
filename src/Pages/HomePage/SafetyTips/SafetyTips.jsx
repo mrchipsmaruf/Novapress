@@ -41,7 +41,7 @@ export default function SafetyTips() {
     ];
 
     return (
-        <section className="py-15 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#EBEBEB] dark:bg-background-dark text-text-light dark:text-text-dark">
+        <section className="pb-15 px-4 pt-5 sm:px-6 lg:px-8 relative overflow-hidden bg-[#EBEBEB] dark:bg-background-dark text-text-light dark:text-text-dark">
             <div className="max-w-[1400px] mx-auto">
                 {/* Background Blobs */}
                 <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">

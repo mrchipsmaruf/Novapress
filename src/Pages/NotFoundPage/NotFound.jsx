@@ -42,7 +42,7 @@ const NotFound = () => {
 
                     <button
                         onClick={() => (window.location.href = "/")}
-                        className="mt-4 px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-md rounded text-sm font-bold text-white tracking-widest uppercase transition-all duration-300">
+                        className="mt-4 px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-md rounded-[7px] text-sm font-bold text-white tracking-widest uppercase transition-all duration-300">
                         Back to Homepage
                     </button>
                 </div>

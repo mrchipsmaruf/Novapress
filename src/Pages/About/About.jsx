@@ -1,0 +1,207 @@
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import missionSlide1 from "../../assets/missionSlide1.jpg"
+import missionSlide2 from "../../assets/missionSlide2.jpg"
+import missionSlide3 from "../../assets/missionSlide3.jpg"
+import missionSlide4 from "../../assets/missionSlide4.jpg"
+import missionSlide5 from "../../assets/missionSlide5.jpg"
+import missionSlide6 from "../../assets/missionSlide6.jpg"
+import civicImage from "../../assets/civic.jpg"
+import platformImage from "../../assets/platform.jpg"
+
+const About = () => {
+
+    return (
+        <div className="bg-[#EBEBEB]  dark:text-[#EFECE6] -mt-25 font-display transition-colors duration-300">
+
+            {/* Header */}
+            <header className="pt-10 pb-12 md:pt-35 md:pb-20 text-center px-4">
+                <div className="inline-block px-3 py-1 mb-6 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
+                    Our Mission
+                </div>
+
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1] mb-4">
+                    Building safer <br className="hidden md:block" />
+                    cities together
+                </h1>
+            </header>
+
+            {/* Gallery Section – Swiper Infinite Slide */}
+            <section className="pb-10 w-full">
+                <Swiper
+                    modules={[Autoplay]}
+                    slidesPerView={2}
+                    spaceBetween={20}
+                    loop={true}
+                    autoplay={{
+                        delay: 0,
+                        disableOnInteraction: false,
+                    }}
+                    speed={4000}
+                    breakpoints={{
+                        640: { slidesPerView: 2 },
+                        768: { slidesPerView: 3 },
+                        1024: { slidesPerView: 4 },
+                    }}>
+                    {[
+                        missionSlide1,
+                        missionSlide2,
+                        missionSlide3,
+                        missionSlide4,
+                        missionSlide5,
+                        missionSlide6
+                    ].map((src, index) => (
+                        <SwiperSlide key={index}>
+                            <img
+                                src={src}
+                                className="h-80 w-full object-cover rounded-xl"
+                                alt="Gallery" />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </section>
+
+            {/* Platform description */}
+            <section className="max-w-[1400px] mx-auto px-6 text-center mt-10 mb-20">
+                <div className="inline-block px-3 py-1 mb-5 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
+                    The Platform
+                </div>
+                <p className="text-xl md:px-10 md:text-3xl md:w-[1000px] mx-auto leading-relaxed font-medium text-black/80 dark:text-white/80">
+                    Crafted for engaged citizens and responsive municipalities, our platform bridges the gap between public needs and infrastructure maintenance. Every report is a step towards a cleaner, safer, and more connected community.
+                </p>
+            </section>
+
+            {/* Real-time Tracking */}
+            <section className="max-w-[1400px] mx-auto px-6 mb-32">
+                <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+                    <div className="order-2 md:order-1 relative rounded-2xl overflow-hidden shadow-2xl shadow-black/5 dark:shadow-none">
+                        <img
+                            src={platformImage}
+                            alt="Engineer inspecting site"
+                            className="w-full h-auto object-cover"/>
+                        <div className="absolute bottom-0 left-2 right-6 dark:bg-black/80  p-4 rounded-lg dark:border-white/10">
+                            <div className="flex items-start flex-col text-xs font-mono">
+                                <span className="text-white flex items-center gap-2">
+                                    <span className="text-yellow-300 text-xl">+ </span>
+                                    Status: Resolved
+                                </span>
+                                <span className="text-white flex items-center gap-2">
+                                    <span className="text-yellow-300 text-xl">+ </span>
+                                    Status: Resolved
+                                </span>
+                                <span className="text-white flex items-center gap-2">
+                                    <span className="text-yellow-300 text-xl">+ </span>
+                                    Status: Resolved
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="order-1 md:order-2">
+                        <div className="inline-block px-3 py-1 mb-6 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
+                            Real-time Tracking
+                        </div>
+
+                        <h2 className="text-3xl md:text-5xl font-semibold mb-6 tracking-tight">
+                            Innovate with <br /> purpose
+                        </h2>
+
+                        <p className="text-lg text-black/60 dark:text-white/60 mb-8 leading-relaxed">
+                            With intuitive layouts, responsive features, and in-depth customization, CivicReport empowers you to share your infrastructure concerns authentically—and connect with the departments who care just as deeply as you do.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Civic Impact */}
+            <section className="max-w-[1400px] mx-auto px-6 mb-32">
+                <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+                    <div>
+                        <div className="inline-block px-3 py-1 mb-6 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
+                            Civic Impact
+                        </div>
+
+                        <h2 className="text-3xl md:text-5xl font-semibold mb-6 tracking-tight">
+                            A lasting first <br /> impression
+                        </h2>
+
+                        <p className="text-lg text-black/60 dark:text-white/60 mb-8 leading-relaxed">
+                            Crafted by acclaimed urban planners known for their exceptional record, this product showcases a refined aesthetic and meticulous attention to detail that elevates overall appeal. Every element has been thoughtfully considered to ensure a sophisticated finish.
+                        </p>
+                    </div>
+
+                    <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/5 dark:shadow-none">
+                        <img
+                            src={civicImage}
+                            alt="Road through forest" />
+
+                        <div className="absolute bottom-0 left-2 right-6 dark:bg-black/80  p-4 rounded-lg dark:border-white/10">
+                            <div className="flex items-start flex-col text-xs font-mono">
+                                <span className="text-white flex items-center gap-2">
+                                    <span className="text-yellow-300 text-xl">+ </span>
+                                    Status: Resolved
+                                </span>
+                                <span className="text-white flex items-center gap-2">
+                                    <span className="text-yellow-300 text-xl">+ </span>
+                                    Status: Resolved
+                                </span>
+                                <span className="text-white flex items-center gap-2">
+                                    <span className="text-yellow-300 text-xl">+ </span>
+                                    Status: Resolved
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            {/*About Us SECTION*/}
+            <section className="max-w-[1400px] mx-auto px-6 py-24 md:py-32">
+                <div className="mb-12">
+                    <div className="inline-block px-3 py-1 mb-6 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
+                        About Us
+                    </div>
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight max-w-3xl">
+                        The ultimate platform for cities driven by sustainability
+                    </h2>
+                </div>
+
+                <div className="grid md:grid-cols-12 gap-8 md:gap-12">
+                    <div className="md:col-span-8 rounded-2xl overflow-hidden h-[400px] md:h-[500px]">
+                        <img
+                            alt="Modern sustainable city architecture"
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-[2s]"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdzpo2WANipjxETIZtPm5hbyNi279R14S3_Bb-kAaKxgw9L-hZomgT2eiu_RVQy-qhyuYcK0yh33MF8CbZAGNmG8fsXxnlOP5yJkgtFOuRPhzyjrWFl5M8tgfUbgZ-UlgUXQdDm4KqIjyI9XejHkAFD5UE6vbJK7HkwANrNxljI3boRPurnYUWb48upUNcT7xRbGlmUvbj5_yfq9k8PC5tmVLkAc0tavHUItXIWqIVMsZF013xrbqeM9yr5YDDhhY11a3hFkkhDGSL"/>
+                    </div>
+
+                    <div className="md:col-span-4 flex flex-col justify-between py-4">
+                        <div className="prose dark:prose-invert prose-lg">
+                            <p className="text-lg font-medium text-black/80 dark:text-white/80 text-justify">
+                                Emphasizing low-impact design principles, this platform seamlessly integrates style and sustainability. Every layout is carefully crafted to help your city make a lasting positive impression on both people and the planet. User-friendly navigation, inclusive elements, and empathetic storytelling work together to elevate your community's message.
+                            </p>
+                        </div>
+
+                        <div className="mt-8">
+                            <h4 className="text-lg font-bold mb-2">Our Metrics</h4>
+                            <div className="flex gap-8">
+                                <div>
+                                    <span className="block text-3xl font-bold">12k+</span>
+                                    <span className="text-xs text-black/50 dark:text-white/50 uppercase tracking-wider">Issues Fixed</span>
+                                </div>
+                                <div>
+                                    <span className="block text-3xl font-bold">98%</span>
+                                    <span className="text-xs text-black/50 dark:text-white/50 uppercase tracking-wider">Resolution Rate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default About;

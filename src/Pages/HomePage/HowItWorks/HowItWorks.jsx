@@ -3,7 +3,7 @@ import React from "react";
 const HowItWorks = () => {
     return (
         <section className="pt-15 pb-6 px-4 sm:px-6 lg:px-8 bg-[#EBEBEB] dark:bg-[#0D0D0D] relative overflow-hidden">
-            <div className="border-b pb-25 max-w-[1400px] mx-auto">
+            <div className="pb-15 max-w-[1400px] mx-auto">
                 <div className="relative">
                     {/* Header */}
                     <div className="text-center mb-20">

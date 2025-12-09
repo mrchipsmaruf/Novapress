@@ -34,7 +34,7 @@ const testimonials = [
 export default function Testimonials() {
     return (
         <section className="pb-24 relative z-10 bg-[#EBEBEB] w-full">
-            <div className="max-w-[1400px] mx-auto">
+            <div className="max-w-[1400px] pt-5 border-t mx-auto">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-14">
                     <div className="max-w-3xl space-y-7">

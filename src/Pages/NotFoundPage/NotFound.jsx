@@ -3,7 +3,7 @@ import notFoundVideo from "../../assets/NotFountVideo.mp4";
 
 const NotFound = () => {
     return (
-        <div className="bg-black text-white font-display overflow-hidden min-h-screen w-full relative flex flex-col">
+        <div className="bg-black text-white -mt-25 font-display overflow-hidden min-h-screen w-full relative flex flex-col">
 
             {/* Background */}
             <div className="absolute inset-0 z-0">

@@ -2,8 +2,35 @@ import React from "react";
 import formBgVideo from "../../../assets/formVideo.mp4"
 import { Link } from "react-router";
 import { FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import UseAuth from "../../../Hooks/UseAuth";
+import { Result } from "postcss";
 
 const Register = () => {
+
+    let { register, handleSubmit, formState: { errors } } = useForm();
+    let { registerUser, googleSignIn } = UseAuth();
+
+    let handleGoogleRegistration = (data) => {
+        googleSignIn(data.email, data.password)
+        .then(result => {
+            console.log(result.user)
+        })
+        .catch(error => [
+            console.log(error)
+        ])
+    }
+
+    let handleRegistration = (data) => {
+        registerUser(data.email, data.password)
+            .then(result => {
+                console.log(result.user)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
     return (
         <div className="relative w-full overflow-hidden">
 
@@ -14,7 +41,7 @@ const Register = () => {
                 loop
                 muted
                 playsInline
-                className="fixed top-0 left-0 w-full h-full object-cover z-0"/>
+                className="fixed top-0 left-0 w-full h-full object-cover z-0" />
 
             <div className="fixed inset-0 bg-black/40 z-0" />
 
@@ -55,7 +82,7 @@ const Register = () => {
                                     </p>
                                 </div>
 
-                                <form className="space-y-2">
+                                <form onSubmit={handleSubmit(handleRegistration)} className="space-y-2">
                                     {/*name*/}
                                     <div>
                                         <label
@@ -65,10 +92,13 @@ const Register = () => {
                                         </label>
                                         <input
                                             type="text"
+                                            {...register('name', { required: true })}
                                             id="name"
-                                            name="Name"
                                             placeholder="Enter your name"
                                             className="block w-full mt-1 px-4 py-3 bg-white/70 border border-neutral-300 rounded-md shadow-sm placeholder-black/60 focus:outline-none sm:text-sm text-black" />
+                                        {errors.name?.type === 'required' && <p className="text-white">
+                                            Name is require
+                                        </p>}
                                     </div>
                                     {/* email */}
                                     <div>
@@ -79,24 +109,30 @@ const Register = () => {
                                         </label>
                                         <input
                                             type="email"
+                                            {...register('email', { required: true })}
                                             id="email"
-                                            name="username"
                                             placeholder="Enter your email"
                                             className="block w-full mt-1 px-4 py-3 bg-white/70 border border-neutral-300 rounded-md shadow-sm placeholder-black/60 focus:outline-none sm:text-sm text-black" />
+                                        {errors.email?.type === 'required' && <p className="text-white">
+                                            Email is required
+                                        </p>}
                                     </div>
-                                    {/* photoURL */}
+                                    {/* photo upload */}
                                     <div>
                                         <label
                                             htmlFor="photo"
                                             className="block text-sm font-medium text-white/70">
-                                            Photo URL
+                                            Photo upload
                                         </label>
                                         <input
-                                            type="photoURL"
-                                            id="photoURL"
-                                            name="photoURL"
-                                            placeholder="Enter your photoURL link"
+                                            type="file"
+                                            {...register('photo', { required: true })}
+                                            id="photo"
+                                            placeholder="Upload your photo"
                                             className="block w-full mt-1 px-4 py-3 bg-white/70 border border-neutral-300 rounded-md shadow-sm placeholder-black/60 focus:outline-none sm:text-sm text-black" />
+                                        {errors.photo?.type === 'required' && <p className="text-white">
+                                            Photo upload is required
+                                        </p>}
                                     </div>
 
                                     {/* Password */}
@@ -108,14 +144,30 @@ const Register = () => {
                                         </label>
                                         <input
                                             type="password"
+                                            {...register('password',
+                                                {
+                                                    required: true,
+                                                    minLength: 6,
+                                                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/
+
+                                                },
+                                            )}
                                             id="password"
-                                            name="password"
                                             placeholder="Enter your password"
                                             className="block w-full mt-1 px-4 py-3 bg-white/70 border border-neutral-300 rounded-md shadow-sm placeholder-black/60 focus:outline-none sm:text-sm text-black" />
+                                        {errors.password?.type === 'required' && <p className="text-white">
+                                            Password is required
+                                        </p>}
+                                        {errors.password?.type === 'minLength' && <p className="text-white">
+                                            Password must be 6 characters or longer
+                                        </p>}
+                                        {errors.password?.type === 'pattern' && <p className="text-white">
+                                            Password must be at least 8 characters, include uppercase, lowercase, number and special character.
+                                        </p>}
                                     </div>
 
                                     {/* Submit Button */}
-                                    <button
+                                    <button onClick={handleGoogleRegistration}
                                         type="submit"
                                         className="w-full mb-0 btn text-white/70 btn-outline border-white/30 hover:text-black">
                                         Create an account
@@ -129,10 +181,8 @@ const Register = () => {
                                         Continue with Google <FaGoogle></FaGoogle>
                                     </button>
                                 </form>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -2,8 +2,29 @@ import React from "react";
 import formBgVideo from "../../../assets/formVideo.mp4"
 import { Link } from "react-router";
 import { FaGoogle } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import UseAuth from "../../../Hooks/UseAuth";
 
 const Login = () => {
+
+    let { register, handleSubmit, formState: { errors } } = useForm();
+
+    let { googleSignIn } = UseAuth();
+
+    let handleGoogleSignIn = (data) => {
+        googleSignIn(data.email, data.password)
+            .then(result => {
+                console.log(result.user)
+            })
+            .catch(error => [
+                console.log(error)
+            ])
+    }
+
+    let handleLogin = (data) => {
+        console.log(data)
+    }
+
     return (
         <div className="relative w-full overflow-hidden">
 
@@ -14,14 +35,10 @@ const Login = () => {
                 loop
                 muted
                 playsInline
-                className="fixed top-0 left-0 w-full h-full object-cover z-0"
-            />
-
-            {/* Overlay (optional for darkening) */}
+                className="fixed top-0 left-0 w-full h-full object-cover z-0" />
             <div className="fixed inset-0 bg-black/40 z-0" />
 
             <div className="relative z-10 py-25">
-
                 {/* Wrapper */}
                 <div className="w-full max-w-[1400px] mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
@@ -57,7 +74,7 @@ const Login = () => {
                                     </p>
                                 </div>
 
-                                <form className="space-y-6">
+                                <form onSubmit={handleSubmit(handleLogin)} className="space-y-6">
                                     {/* Username */}
                                     <div>
                                         <label
@@ -67,10 +84,14 @@ const Login = () => {
                                         </label>
                                         <input
                                             type="email"
+                                            {...register('email', { required: true })}
                                             id="email"
                                             name="username"
                                             placeholder="Enter your email"
                                             className="block w-full mt-1 px-4 py-3 bg-white/70 border border-neutral-300 rounded-md shadow-sm placeholder-black/60 focus:outline-none sm:text-sm text-black" />
+                                        {errors.email?.type === 'required' && <p className="text-white">
+                                            Email is required
+                                        </p>}
                                     </div>
 
                                     {/* Password */}
@@ -82,10 +103,26 @@ const Login = () => {
                                         </label>
                                         <input
                                             type="password"
+                                            {...register('password',
+                                                {
+                                                    required: true,
+                                                    minLength: 6,
+                                                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{8,}$/
+
+                                                })}
                                             id="password"
                                             name="password"
                                             placeholder="Enter your password"
                                             className="block w-full mt-1 px-4 py-3 bg-white/70 border border-neutral-300 rounded-md shadow-sm placeholder-black/60 focus:outline-none sm:text-sm text-black" />
+                                        {errors.password?.type === 'required' && <p className="text-white">
+                                            Password is required
+                                        </p>}
+                                        {errors.password?.type === 'minLength' && <p className="text-white">
+                                            Password must be 6 characters or longer
+                                        </p>}
+                                        {errors.password?.type === 'pattern' && <p className="text-white">
+                                            Password must be at least 8 characters, include uppercase, lowercase, number and special character.
+                                        </p>}
                                     </div>
 
                                     {/* Submit Button */}
@@ -99,7 +136,7 @@ const Login = () => {
                                         <span className="text-white/70">or</span>
                                         <div className="flex-1 border-t border-white/40"></div>
                                     </div>
-                                    <button className="w-full mb-0 btn text-white/70 btn-outline border-white/30 hover:text-black">
+                                    <button onClick={handleGoogleSignIn} className="w-full mb-0 btn text-white/70 btn-outline border-white/30 hover:text-black">
                                         Continue with Google <FaGoogle></FaGoogle>
                                     </button>
                                 </form>

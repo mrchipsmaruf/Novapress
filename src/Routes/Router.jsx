@@ -10,6 +10,9 @@ import Login from "../Pages/AuthPages/Login/Login";
 import Register from "../Pages/AuthPages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import IssueDetails from "../Pages/AllIssuesPage/IssueDetails";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import MyIssues from "../Pages/Dashboard/MyIssues/MyIssues";
+import SubmitIssue from "../Pages/Dashboard/SubmitIssue/SubmitIssue";
 
 export const router = createBrowserRouter([
   {
@@ -26,9 +29,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "issues-details/:id",
-        element: <PrivateRoute>
-        <IssueDetails></IssueDetails>
-        </PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <IssueDetails />
+          </PrivateRoute>
+        )
       },
       {
         path: "about",
@@ -44,6 +49,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/",
     Component: AuthLayout,
@@ -55,6 +61,25 @@ export const router = createBrowserRouter([
       {
         path: "register",
         Component: Register
+      }
+    ]
+  },
+
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: 'add-issue',
+        element: <SubmitIssue />
+      },
+      {
+        path: 'my-issues',
+        element: <MyIssues />
       }
     ]
   }

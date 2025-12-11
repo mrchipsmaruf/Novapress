@@ -13,15 +13,15 @@ export default function Banner() {
     const slides = [
         {
             id: 1,
-            title: "Together for a Cleaner Community",
-            subtitle: "Report waste problems and help us keep every neighborhood clean and healthy.",
-            image: `${banner1}`,
-        },
-        {
-            id: 2,
             title: "Your Safety Starts With a Single Report",
             subtitle: "Alert local authorities about fire hazards before they become emergencies.",
             image: `${banner2}`,
+        },
+        {
+            id: 2,
+            title: "Together for a Cleaner Community",
+            subtitle: "Report waste problems and help us keep every neighborhood clean and healthy.",
+            image: `${banner1}`,
         },
         {
             id: 3,

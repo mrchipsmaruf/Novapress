@@ -14,20 +14,16 @@ const Login = () => {
     let location = useLocation();
     let navigate = useNavigate();
 
-    // ---------------------------------------------------
     // GOOGLE LOGIN HANDLER
-    // ---------------------------------------------------
     let handleGoogleSignIn = () => {
         googleSignIn()
             .then(async (result) => {
 
                 let user = result.user;
-
-                // Check if user exists in backend
                 let res = await axios.get(`http://localhost:3000/users/${user.email}`);
 
                 if (!res.data) {
-                    // Auto create user in DB
+                    //create user in DB
                     let newUser = {
                         name: user.displayName,
                         email: user.email,
@@ -45,10 +41,7 @@ const Login = () => {
             .catch(error => console.log(error));
     };
 
-
-    // ---------------------------------------------------
     // EMAIL + PASSWORD LOGIN HANDLER
-    // ---------------------------------------------------
     let handleLogin = async (data) => {
         try {
             let result = await signInUser(data.email, data.password);
@@ -57,7 +50,7 @@ const Login = () => {
             let res = await axios.get(`http://localhost:3000/users/${email}`);
 
             if (!res.data) {
-                alert("User does not exist in database!");
+                alert("User does not exist");
                 return;
             }
 
@@ -70,7 +63,7 @@ const Login = () => {
             // ROLE BASED NAVIGATION
             if (res.data.role === "admin") {
                 navigate("/dashboard/admin");
-            } 
+            }
             else {
                 navigate(location?.state || "/");
             }
@@ -114,7 +107,7 @@ const Login = () => {
                             </p>
 
                             <p className="flex items-center gap-5">
-                                New to Novapress? 
+                                New to Novapress?
                                 <Link state={location.state} to={"/register"} className="btn btn-outline">
                                     Create an account
                                 </Link>
@@ -138,7 +131,7 @@ const Login = () => {
                                             type="email"
                                             {...register('email', { required: true })}
                                             placeholder="Enter your email"
-                                            className="block w-full mt-1 px-4 py-3 bg-white/70 border rounded-md text-black"/>
+                                            className="block w-full mt-1 px-4 py-3 bg-white/70 border rounded-md text-black" />
                                         {errors.email && <p className="text-white">Email is required</p>}
                                     </div>
 
@@ -149,7 +142,7 @@ const Login = () => {
                                             type="password"
                                             {...register('password', { required: true })}
                                             placeholder="Enter your password"
-                                            className="block w-full mt-1 px-4 py-3 bg-white/70 border rounded-md text-black"/>
+                                            className="block w-full mt-1 px-4 py-3 bg-white/70 border rounded-md text-black" />
                                         {errors.password && <p className="text-white">Password is required</p>}
                                     </div>
 
@@ -165,9 +158,9 @@ const Login = () => {
                                     </div>
 
                                     {/* Google Login */}
-                                    <button 
+                                    <button
                                         type="button"
-                                        onClick={handleGoogleSignIn} 
+                                        onClick={handleGoogleSignIn}
                                         className="w-full btn hover:text-black text-white/70 btn-outline">
                                         Continue with Google <FaGoogle />
                                     </button>

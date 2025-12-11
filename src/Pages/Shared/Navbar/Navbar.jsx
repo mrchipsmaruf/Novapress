@@ -71,12 +71,21 @@ const Navbar = () => {
                     <div className="flex items-center gap-5">
                         {user ? (
                             <div className="relative flex items-center gap-3">
+
+                                {/* dashboard */}
+                                <NavLink
+                                    to="/dashboard"
+                                    className={`btn transition-colors duration-300 btn-outline px-4 py-2 text-sm hover:text-black hover:bg-white ${scrolled ? "bg-white/40 text-black" : "bg-transparent text-white"}`}>
+                                    Dashboard
+                                </NavLink>
+
+
                                 {/* Profile Image */}
                                 <button onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}>
                                     <img
                                         src={user.photoURL || user.photo}
                                         className="h-9 w-9 rounded-full border object-cover"
-                                        alt="Profile"/>
+                                        alt="Profile" />
                                 </button>
 
                                 {/* Dropdown */}

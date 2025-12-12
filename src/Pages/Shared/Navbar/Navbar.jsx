@@ -84,7 +84,7 @@ const Navbar = () => {
                                 <button onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}>
                                     <img
                                         src={user.photoURL || user.photo}
-                                        className="h-9 w-9 rounded-full border object-cover"
+                                        className="h-9 w-9 rounded-full object-cover"
                                         alt="Profile" />
                                 </button>
 

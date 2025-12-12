@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import API from "../../../Services/api";
 import UseAuth from "../../../Hooks/UseAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import axiosSecure from "../../../Services/axiosSecure";
 
 export default function AddIssue() {
     const { user } = UseAuth();
@@ -35,11 +35,11 @@ export default function AddIssue() {
                 }
 
                 //get user from backend to check premium flag
-                const userRes = await API.get(`/users/${user.email}`);
+                const userRes = await axiosSecure.get(`/users/${user.email}`);
                 setIsPremium(Boolean(userRes.data?.premium || userRes.data?.isPremium));
 
                 //get user's issues
-                const issuesRes = await API.get(`/issues/user/${user.email}`);
+                const issuesRes = await axiosSecure.get(`/issues/user/${user.email}`);
                 const issues = issuesRes.data || [];
                 setUserIssueCount(issues.length);
             } catch (err) {
@@ -137,8 +137,7 @@ export default function AddIssue() {
             };
 
             //save to DB
-            const res = await API.post("/issues", payload);
-
+            const res = await axiosSecure.post("/issues", payload);
             if (res.data?.insertedId || res.data?.acknowledged) {
                 Swal.fire({ icon: "success", title: "Submitted!", text: "Issue submitted successfully." });
                 navigate("/dashboard/my-issues");

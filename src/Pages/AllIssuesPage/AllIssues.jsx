@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import API from "../../Services/api";
+import API from "../../Services/axiosSecure";
 import UseAuth from "../../Hooks/UseAuth";
 
 /**
@@ -23,8 +23,8 @@ export default function AllIssues() {
 
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("category");
-    const defaultStatuses = ["Status", "Resolved"];
-    const [status, setStatus] = useState("resolved");
+    const defaultStatuses = ["Status", "Pending", "In-Progress", "Working", "Resolved", "Closed"];
+    const [status, setStatus] = useState("Status");
     const [priority, setPriority] = useState("priority");
 
     // pagination state (client-side)

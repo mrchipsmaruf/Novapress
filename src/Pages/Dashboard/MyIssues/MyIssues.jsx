@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react";
-import API from "../../../Services/api";
 import UseAuth from "../../../Hooks/UseAuth";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import axiosSecure from "../../../Services/axiosSecure";
 
 export default function MyIssues() {
   const { user } = UseAuth();
@@ -14,7 +14,7 @@ export default function MyIssues() {
     queryKey: ["myIssues", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await API.get(`/issues/user/${user.email}`);
+      const res = await axiosSecure.get(`/issues/user/${user.email}`);
       return res.data || [];
     }
   });
@@ -34,7 +34,7 @@ export default function MyIssues() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
-      return API.delete(`/issues/${id}`);
+      return axiosSecure.delete(`/issues/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["myIssues", user?.email]);
@@ -43,7 +43,7 @@ export default function MyIssues() {
 
   const editMutation = useMutation({
     mutationFn: async ({ id, data }) => {
-      return API.patch(`/issues/edit/${id}`, data);
+      return axiosSecure.patch(`/issues/edit/${id}`, data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["myIssues", user?.email]);
@@ -159,10 +159,9 @@ export default function MyIssues() {
               {/* Status */}
               <p className="text-sm mb-1">
                 <strong>Status:</strong>{" "}
-                <span className={`px-2 py-1 rounded text-white text-xs ${
-                  issue.status === "pending" ? "bg-yellow-500"
+                <span className={`px-2 py-1 rounded text-white text-xs ${issue.status === "pending" ? "bg-yellow-500"
                   : issue.status === "in-progress" ? "bg-blue-500"
-                  : "bg-green-600"}`}>
+                    : "bg-green-600"}`}>
                   {issue.status}
                 </span>
               </p>

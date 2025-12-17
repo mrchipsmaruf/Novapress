@@ -56,20 +56,21 @@ export default function ManageIssues() {
 
     // Mutations
     const changeStatus = useMutation({
-        mutationFn: async ({ id, newStatus }) =>
-            axiosSecure.patch(`/issues/${id}/status`, { status: newStatus }),
+        mutationFn: async ({ id, newStatus, note }) =>
+            axiosSecure.patch(`/issues/${id}/status`, {
+                status: newStatus,
+                note
+            }),
         onSuccess: async () => {
             await queryClient.invalidateQueries(["admin:issues"]);
             Swal.fire("Updated", "Status updated successfully", "success");
-        },
-        onError: (err) => {
-            Swal.fire("Error", err?.response?.data?.message || err.message, "error");
         }
     });
 
+
     const assignStaff = useMutation({
         mutationFn: async ({ id, staffEmail }) =>
-            axiosSecure.patch(`/issues/${id}/assign`, { staffEmail }),
+            axiosSecure.patch(`/issues/assign/${id}`, { staffEmail }),
         onSuccess: async () => {
             await queryClient.invalidateQueries(["admin:issues"]);
             Swal.fire("Assigned", "Staff assigned successfully", "success");
@@ -181,7 +182,6 @@ export default function ManageIssues() {
                     <select className="select select-sm" value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }}>
                         <option>All</option>
                         <option>pending</option>
-                        <option>assigned</option>
                         <option>in-progress</option>
                         <option>resolved</option>
                         <option>closed</option>
@@ -223,12 +223,11 @@ export default function ManageIssues() {
                                         onChange={(e) => onStatusChange(issue._id, e.target.value)}
                                     >
                                         <option value="pending">Pending</option>
-                                        <option value="assigned">Assigned</option>
                                         <option value="in-progress">In Progress</option>
                                         <option value="resolved">Resolved</option>
                                         <option value="closed">Closed</option>
-                                        <option value="rejected">Rejected</option>
                                     </select>
+
                                 </td>
 
                                 <td>
@@ -239,13 +238,28 @@ export default function ManageIssues() {
                                         <button onClick={() => onSetPriority(issue._id, issue.priority)} className="btn btn-xs btn-ghost">Change</button>
                                     </div>
                                 </td>
-
-                                <td>{issue.assignedStaff || "Unassigned"}</td>
+                                <td>
+                                    {issue.assignedStaff ? (
+                                        <span className="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700">
+                                            {typeof issue.assignedStaff === "string"
+                                                ? issue.assignedStaff
+                                                : issue.assignedStaff.email}
+                                        </span>
+                                    ) : (
+                                        <span className="text-gray-400">Unassigned</span>
+                                    )}
+                                </td>
 
                                 <td className="text-right">
                                     <div className="flex items-center justify-end gap-2">
-                                        <Link to={`/dashboard/admin/issue/${issue._id}`} className="btn btn-sm btn-primary">View</Link>
-                                        <button className="btn btn-sm btn-warning" onClick={() => onAssign(issue._id)}>Assign</button>
+                                        <Link to={`/dashboard/issue/${issue._id}`} className="btn btn-sm btn-primary">View</Link>
+                                        {!issue.assignedStaff && (
+                                            <button
+                                                className="btn btn-sm btn-warning"
+                                                onClick={() => onAssign(issue._id)}>
+                                                Assign
+                                            </button>
+                                        )}
                                         <button className="btn btn-sm btn-error" onClick={() => onDelete(issue._id)}>Delete</button>
                                     </div>
                                 </td>

@@ -14,10 +14,11 @@ export default function MyIssues() {
     queryKey: ["myIssues", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/issues/user/${user.email}`);
-      return res.data || [];
+      const res = await axiosSecure.get(`/issues/my/${user.email}`);
+      return res.data;
     }
   });
+
 
   const [statusFilter, setStatusFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -167,7 +168,9 @@ export default function MyIssues() {
               </p>
 
               {/* Date */}
-              <p className="text-sm text-gray-500 mb-2"><strong>Reported:</strong> {issue.reportedAt}</p>
+              <p className="text-xs text-gray-500">
+                {new Date(issue.reportedAt).toLocaleString()}
+              </p>
 
               {/* Buttons */}
               <div className="flex justify-between mt-3">
@@ -180,7 +183,13 @@ export default function MyIssues() {
                   )}
 
                   {/* Delete */}
-                  <button onClick={() => handleDelete(issue._id)} className="btn text-white btn-sm btn-error">Delete</button>
+                  {issue.status === "pending" && (
+                    <button
+                      onClick={() => handleDelete(issue._id)}
+                      className="btn btn-sm btn-error text-white">
+                      Delete
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

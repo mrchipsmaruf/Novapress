@@ -23,7 +23,7 @@ const Login = () => {
 
                 const user = result.user;
 
-                let res = await axios.get(`http://localhost:3000/users/${user.email}`);
+                let res = await axios.get(`https://novapress-server.vercel.app/users/${user.email}`);
 
                 if (isEmptyUser(res.data)) {
                     const newUser = {
@@ -35,7 +35,7 @@ const Login = () => {
                         premium: false
                     };
 
-                    await axios.post("http://localhost:3000/users", newUser);
+                    await axios.post("https://novapress-server.vercel.app/users", newUser);
                 }
 
                 navigate(location?.state || "/");
@@ -49,7 +49,7 @@ const Login = () => {
             const result = await signInUser(data.email, data.password);
             const email = result.user.email;
 
-            let res = await axios.get(`http://localhost:3000/users/${email}`);
+            let res = await axios.get(`https://novapress-server.vercel.app/users/${email}`);
 
             // Auto-create user in DB if missing
             if (isEmptyUser(res.data)) {
@@ -61,7 +61,7 @@ const Login = () => {
                     isBlocked: false,
                     premium: false
                 };
-                await axios.post("http://localhost:3000/users", newUser);
+                await axios.post("https://novapress-server.vercel.app/users", newUser);
                 res = { data: newUser };
             }
 

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const saveUserToDB = async (userInfo) => {
     const res = await axios.post(
-        "http://localhost:3000/users",
+        "https://novapress-server.vercel.app/users",
         userInfo
     );
     return res.data;

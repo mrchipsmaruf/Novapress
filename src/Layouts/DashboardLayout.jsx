@@ -1,9 +1,7 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import UseAuth from "../Hooks/UseAuth";
-import Loading from "../Components/Loading/Loading";
 import useRole from "../Hooks/useRole";
-
 import {
     Home,
     FilePlus,
@@ -17,15 +15,15 @@ import {
 
 const DashboardLayout = () => {
     const { signOutUser } = UseAuth();
-    const { role, roleLoading } = useRole();
+    const { role } = useRole();
 
-    if (roleLoading) {
-        return <Loading />;
-    }
-
-    // ------- SIDEBAR MENUS BY ROLE -------
-    const userMenu = (
+    const citizenMenu = (
         <>
+            <li>
+                <NavLink to="/dashboard">
+                    <BarChart3 size={18} /> Statistics
+                </NavLink>
+            </li>
             <li>
                 <NavLink to="/dashboard/add-issue">
                     <FilePlus size={18} /> Submit Issue
@@ -43,17 +41,12 @@ const DashboardLayout = () => {
         <>
             <li>
                 <NavLink to="/dashboard/staff-dashboard">
-                    <Home size={18} /> Staff Home
+                    <BarChart3 size={18} /> Staff Statistics
                 </NavLink>
             </li>
             <li>
                 <NavLink to="/dashboard/assigned-issues">
                     <ClipboardList size={18} /> Assigned Issues
-                </NavLink>
-            </li>
-            <li>
-                <NavLink to="/dashboard/staff-stats">
-                    <BarChart3 size={18} /> My Stats
                 </NavLink>
             </li>
         </>
@@ -62,8 +55,8 @@ const DashboardLayout = () => {
     const adminMenu = (
         <>
             <li>
-                <NavLink to="/dashboard/admin-dashboard">
-                    <Home size={18} /> Admin Home
+                <NavLink to="/dashboard">
+                    <BarChart3 size={18} /> Admin Statistics
                 </NavLink>
             </li>
             <li>
@@ -76,83 +69,58 @@ const DashboardLayout = () => {
                     <ClipboardList size={18} /> Manage Issues
                 </NavLink>
             </li>
-            <li>
-                <NavLink to="/dashboard/admin-statistics">
-                    <BarChart3 size={18} /> Admin Statistics
-                </NavLink>
-            </li>
         </>
     );
 
     return (
         <div className="drawer lg:drawer-open bg-base-300">
-            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+            <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
-            {/* Page content */}
+            {/* CONTENT */}
             <div className="drawer-content p-3">
-                <nav className="navbar w-full">
-                    <div className="px-4 text-2xl font-semibold">
+                <nav className="navbar bg-white rounded-lg mb-3">
+                    <div className="flex-1 px-4 text-2xl font-semibold">
                         {role === "admin"
                             ? "Admin Dashboard"
                             : role === "staff"
                                 ? "Staff Dashboard"
                                 : "Citizen Dashboard"}
                     </div>
-
-                    {/* Mobile button */}
-                    <label
-                        htmlFor="my-drawer-4"
-                        className="btn btn-primary drawer-button lg:hidden"
-                    >
+                    <label htmlFor="dashboard-drawer" className="btn btn-primary drawer-button lg:hidden">
                         Menu
                     </label>
                 </nav>
 
-                <div className="p-4 bg-white rounded-[7px]">
+                <div className="p-4 bg-white rounded-lg min-h-[80vh]">
                     <Outlet />
                 </div>
             </div>
 
-            {/* Sidebar */}
+            {/* SIDEBAR */}
             <div className="drawer-side p-3">
-                <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+                <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
 
-                <ul className="menu text-lg p-4 w-72 rounded-[7px] bg-white min-h-full">
-                    {/* Logo */}
-                    <Link
-                        to="/"
-                        className="flex justify-start pl-4 logoText text-3xl mb-6 font-bold"
-                    >
+                <ul className="menu p-4 w-72 bg-white rounded-lg min-h-full text-lg">
+                    <Link to="/" className="text-3xl font-bold mb-6 pl-2">
                         NOVAPRESS
                     </Link>
 
-                    {/* Common to all */}
                     <li>
                         <NavLink to="/">
                             <Home size={18} /> Homepage
                         </NavLink>
                     </li>
 
-                    {/* ROLE-BASED MENUS */}
                     {role === "admin" && adminMenu}
                     {role === "staff" && staffMenu}
-                    {role === "citizen" && userMenu}
+                    {role === "citizen" && citizenMenu}
 
-                    {/* Statistics (optional) */}
-                    <li>
-                        <NavLink to="/dashboard/statistics">
-                            <BarChart3 size={18} /> Statistics
-                        </NavLink>
-                    </li>
-
-                    {/* Profile */}
                     <li>
                         <NavLink to="/dashboard/profile">
                             <User size={18} /> Profile
                         </NavLink>
                     </li>
 
-                    {/* Logout */}
                     <li>
                         <button onClick={signOutUser} className="text-red-600">
                             <LogOut size={18} /> Logout

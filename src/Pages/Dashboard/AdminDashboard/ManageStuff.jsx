@@ -3,7 +3,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import Loading from "../../../Components/Loading/Loading";
 
-const AdminStaffList = () => {
+const ManageStaff = () => {
     const axiosSecure = useAxiosSecure();
     const qc = useQueryClient();
 
@@ -146,4 +146,4 @@ const AdminStaffList = () => {
     );
 };
 
-export default AdminStaffList;
+export default ManageStaff;

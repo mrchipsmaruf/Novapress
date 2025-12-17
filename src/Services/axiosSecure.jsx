@@ -1,18 +1,18 @@
 import axios from "axios";
-import { auth } from "../Firebase/Firebase.init";
-
+import { getAuth } from "firebase/auth";
 
 const axiosSecure = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:3000",
+    baseURL: import.meta.env.VITE_API_URL,
 });
 
 axiosSecure.interceptors.request.use(
     async (config) => {
-        const currentUser = auth.currentUser;
+        const auth = getAuth();
+        const user = auth.currentUser;
 
-        if (currentUser) {
-            const token = await currentUser.getIdToken();
-            config.headers.Authorization = `Bearer ${token}`;
+        if (user) {
+            const token = await user.getIdToken(true);
+            config.headers.authorization = `Bearer ${token}`;
         }
 
         return config;

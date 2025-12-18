@@ -9,7 +9,7 @@ const Footer = () => {
 
           {/* Left Navigation */}
           <div className="md:col-span-3 flex flex-col space-y-2 md:border-r border-gray-200 dark:border-gray-800 pr-8">
-            <nav className="flex flex-col space-y-1">
+            <nav className="flex flex-col space-y-6">
               <Link className="text-2xl md:text-3xl font-bold hover:text-gray-600 dark:hover:text-gray-400 transition-colors block" to={"/"}>
                 Home
               </Link>
@@ -83,22 +83,13 @@ const Footer = () => {
                   </a>
                 </div>
               </div>
-
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-widest text-muted-light dark:text-muted-dark mb-4">
-                  Others
-                </h4>
-                <a className="text-lg hover:underline decoration-1 underline-offset-4" href="#">
-                  Licenses
-                </a>
-              </div>
             </div>
 
           </div>
         </div>
 
         <div className="w-full dark:border-gray-700 flex items-center justify-center overflow-hidden py-0">
-          <h1 className="logoText font-bold text-[325px] text-black dark:text-white text-center leading-none py-0">
+          <h1 className="logoText font-bold text-[245px] text-black dark:text-white text-center leading-none py-0">
             NOVAPRESS
           </h1>
         </div>

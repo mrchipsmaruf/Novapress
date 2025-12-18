@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import axiosSecure from "../../../Services/axiosSecure";
+import Loading from "../../../Components/Loading/Loading";
 
 export default function MyIssues() {
   const { user } = UseAuth();
@@ -114,11 +115,11 @@ export default function MyIssues() {
     });
   };
 
-  if (isLoading) return <div className="p-5 text-center">Loading your issues...</div>;
+  if (isLoading) return <div className="p-5 text-center"><Loading></Loading></div>;
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4">My Reported Issues</h2>
+    <div className="max-w-full mx-auto bg-white rounded-lg">
+      <h2 className="inline-block px-4 py-1.5 mb-6 border border-black/20 dark:border-white/20 rounded-full text-sm uppercase tracking-[0.25em] font-semibold text-black dark:text-gray-300 items-center">My Reported Issues</h2>
 
       {/* Filters */}
       <div className="flex flex-col md:flex-row gap-3 mb-6 items-center">
@@ -135,14 +136,14 @@ export default function MyIssues() {
           </select>
         </div>
         <div className="ml-auto">
-          <button onClick={() => { setStatusFilter("all"); setCategoryFilter("all"); }} className="btn btn-ghost">Clear</button>
+          <button onClick={() => { setStatusFilter("all"); setCategoryFilter("all"); }} className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4">Clear</button>
         </div>
       </div>
 
       {filteredIssues.length === 0 ? (
         <p className="text-gray-600">You have no issues matching that filter.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {filteredIssues.map((issue) => (
             <div key={issue._id} className="border rounded-lg p-4 shadow-sm">
 
@@ -174,7 +175,7 @@ export default function MyIssues() {
 
               {/* Buttons */}
               <div className="flex justify-between mt-3">
-                <Link to={`/dashboard/issue/${issue._id}`} className="btn btn-sm btn-primary">View Details</Link>
+                <Link to={`/dashboard/issue/${issue._id}`} className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4">View Details</Link>
 
                 <div className="flex gap-2">
                   {/* Edit button: only shown if pending */}
@@ -201,7 +202,7 @@ export default function MyIssues() {
       {isEditOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="bg-white p-6 rounded-lg w-full max-w-2xl">
-            <h3 className="text-xl font-semibold mb-4">Edit Issue</h3>
+            <h3 className="inline-block px-4 py-1.5 mb-6 border border-black/20 dark:border-white/20 rounded-full text-sm uppercase tracking-[0.25em] font-semibold text-black dark:text-gray-300 items-center">Edit Issue</h3>
             <form onSubmit={handleSubmit(onEditSubmit)} className="space-y-3">
               <div>
                 <label className="block text-sm font-medium">Title</label>
@@ -231,7 +232,7 @@ export default function MyIssues() {
 
               <div className="flex justify-end gap-3 mt-4">
                 <button type="button" onClick={closeEditModal} className="btn btn-ghost">Cancel</button>
-                <button type="submit" disabled={isSubmitting || editMutation.isLoading} className="btn btn-primary">
+                <button type="submit" disabled={isSubmitting || editMutation.isLoading} className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-5">
                   {editMutation.isLoading ? "Saving..." : "Save Changes"}
                 </button>
               </div>

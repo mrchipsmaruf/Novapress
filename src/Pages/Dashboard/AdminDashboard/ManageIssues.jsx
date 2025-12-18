@@ -167,9 +167,9 @@ export default function ManageIssues() {
     if (isError) return <div className="p-6 text-red-600">Error: {String(error?.message || error)}</div>;
 
     return (
-        <div className="p-6">
+        <div className="">
             <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-semibold">Manage Issues</h1>
+                <h1 className="inline-block px-4 py-1.5 mb-6 border border-black/20 dark:border-white/20 rounded-full text-sm uppercase tracking-[0.25em] font-semibold text-black dark:text-gray-300 items-center">Manage Issues</h1>
 
                 <div className="flex gap-2">
                     <input
@@ -235,7 +235,7 @@ export default function ManageIssues() {
                                         <span className={`text-xs px-2 py-1 rounded text-white ${issue.priority === "high" ? "bg-red-600" : "bg-gray-600"}`}>
                                             {issue.priority || "normal"}
                                         </span>
-                                        <button onClick={() => onSetPriority(issue._id, issue.priority)} className="btn btn-xs btn-ghost">Change</button>
+                                        <button onClick={() => onSetPriority(issue._id, issue.priority)} className="btn btn-xs bg-red-500 text-white">Change</button>
                                     </div>
                                 </td>
                                 <td>
@@ -252,15 +252,15 @@ export default function ManageIssues() {
 
                                 <td className="text-right">
                                     <div className="flex items-center justify-end gap-2">
-                                        <Link to={`/dashboard/issue/${issue._id}`} className="btn btn-sm btn-primary">View</Link>
+                                        <Link to={`/dashboard/issue/${issue._id}`} className="btn btn-sm bg-yellow-300">View</Link>
                                         {!issue.assignedStaff && (
                                             <button
-                                                className="btn btn-sm btn-warning"
+                                                className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4"
                                                 onClick={() => onAssign(issue._id)}>
                                                 Assign
                                             </button>
                                         )}
-                                        <button className="btn btn-sm btn-error" onClick={() => onDelete(issue._id)}>Delete</button>
+                                        <button className="btn btn-sm btn-error text-white" onClick={() => onDelete(issue._id)}>Delete</button>
                                     </div>
                                 </td>
                             </tr>

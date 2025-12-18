@@ -5,6 +5,7 @@ import UseAuth from "../../../Hooks/UseAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import axiosSecure from "../../../Services/axiosSecure";
+import Loading from "../../../Components/Loading/Loading";
 
 export default function SubmitIssue() {
     const { user } = UseAuth();
@@ -84,7 +85,7 @@ export default function SubmitIssue() {
 
     const onSubmit = async (data) => {
 
-        // 🚫 FRONTEND LIMIT CHECK (REQUIREMENT)
+        //FRONTEND LIMIT CHECK
         if (
             profile.role === "citizen" &&
             !profile.isPremium &&
@@ -145,13 +146,13 @@ export default function SubmitIssue() {
 
     /* ------------------ LOADING ------------------ */
 
-    if (checkingUser) return <p>Checking account...</p>;
+    if (checkingUser) return <p><Loading></Loading></p>;
 
     /* ------------------ UI ------------------ */
 
     return (
-        <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow">
-            <h2 className="text-2xl font-bold mb-4">Report an Issue</h2>
+        <div className="max-w-full mx-auto bg-white rounded-lg">
+            <h2 className="inline-block px-4 py-1.5 mb-6 border border-black/20 dark:border-white/20 rounded-full text-sm uppercase tracking-[0.25em] font-semibold text-black dark:text-gray-300 items-center">Report an Issue</h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
@@ -203,7 +204,7 @@ export default function SubmitIssue() {
 
                 <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-5"
                     disabled={
                         isSubmitting ||
                         (profile.role === "citizen" &&

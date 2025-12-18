@@ -9,7 +9,11 @@ const CitizenDashboard = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = UseAuth();
 
-    const { data: stats = {}, isLoading } = useQuery({
+    const {
+        data: stats = {},
+        isLoading,
+        isError
+    } = useQuery({
         queryKey: ["citizenStats", user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
@@ -22,6 +26,14 @@ const CitizenDashboard = () => {
 
     if (isLoading) return <Loading />;
 
+    if (isError) {
+        return (
+            <div className="p-6 text-red-600 font-medium">
+                Failed to load your dashboard data. Please try again.
+            </div>
+        );
+    }
+
     const {
         total = 0,
         pending = 0,
@@ -32,12 +44,17 @@ const CitizenDashboard = () => {
     } = stats;
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-8">
 
-            {/* 🔹 PAGE TITLE */}
-            <h1 className="text-2xl font-semibold">
-               Statistics
-            </h1>
+            {/* PAGE TITLE */}
+            <div>
+                <h1 className="inline-block px-4 py-1.5 mb-6 border border-black/20 dark:border-white/20 rounded-full text-sm uppercase tracking-[0.25em] font-semibold text-black dark:text-gray-300 items-center">
+                    Citizen Statistics
+                </h1>
+                <p className="text-sm text-gray-500">
+                    Overview of the issues you have reported
+                </p>
+            </div>
 
             {/* 🔹 STATISTICS CARDS */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -78,8 +95,8 @@ const CitizenDashboard = () => {
                 />
             </div>
 
-            {/* 🔹 RECENT ISSUES */}
-            <div className="bg-white rounded shadow p-4">
+            {/* RECENT ISSUES */}
+            <div className="bg-white rounded shadow p-5">
                 <h2 className="text-lg font-semibold mb-4">
                     Recent Reported Issues
                 </h2>
@@ -89,25 +106,28 @@ const CitizenDashboard = () => {
                         You have not reported any issues yet.
                     </p>
                 ) : (
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                         {recent.map(issue => (
                             <div
                                 key={issue._id}
-                                className="border rounded p-3 flex flex-col md:flex-row md:items-center md:justify-between"
+                                className="border rounded p-4 flex flex-col md:flex-row md:items-center md:justify-between"
                             >
                                 <div>
-                                    <h3 className="font-semibold">
+                                    <h3 className="font-semibold text-gray-800">
                                         {issue.title}
                                     </h3>
-                                    <p className="text-sm text-gray-600">
+
+                                    <p className="text-sm mt-1">
                                         Status:{" "}
-                                        <span className="capitalize font-medium">
+                                        <span
+                                            className={`capitalize font-medium ${getStatusColor(issue.status)}`}
+                                        >
                                             {issue.status}
                                         </span>
                                     </p>
                                 </div>
 
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-gray-500 mt-2 md:mt-0">
                                     {new Date(issue.reportedAt).toLocaleDateString()}
                                 </p>
                             </div>
@@ -119,9 +139,6 @@ const CitizenDashboard = () => {
     );
 };
 
-/* =========================
-   STAT CARD COMPONENT
-========================= */
 const StatCard = ({ title, value, icon, color }) => (
     <div className={`rounded shadow p-4 flex items-center gap-4 ${color}`}>
         <div className="text-gray-700">
@@ -137,5 +154,20 @@ const StatCard = ({ title, value, icon, color }) => (
         </div>
     </div>
 );
+
+const getStatusColor = (status) => {
+    switch (status) {
+        case "pending":
+            return "text-yellow-600";
+        case "in progress":
+            return "text-orange-600";
+        case "resolved":
+            return "text-green-600";
+        case "closed":
+            return "text-gray-600";
+        default:
+            return "text-gray-500";
+    }
+};
 
 export default CitizenDashboard;

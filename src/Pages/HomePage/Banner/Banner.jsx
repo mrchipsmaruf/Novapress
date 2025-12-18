@@ -57,8 +57,8 @@ export default function Banner() {
                         <div className="w-full h-full bg-cover bg-center flex flex-col justify-center px-10 md:px-20 absolute inset-0"
                             style={{ backgroundImage: `url(${item.image})` }}>
                                 <div className="absolute inset-0 bg-black/40"></div>
-                            <div className="w-[1400px] mx-auto">
-                                <h1 className="text-4xl md:text-6xl font-bold text-yellow-400 drop-shadow-lg">
+                            <div className="w-[1400px] mx-auto -mb-70">
+                                <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
                                     {item.title}
                                 </h1>
                                 <p className="text-lg text-white md:text-2xl mt-4 drop-shadow">

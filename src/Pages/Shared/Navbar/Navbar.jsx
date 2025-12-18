@@ -26,26 +26,25 @@ const Navbar = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const navClass = ({ isActive }) =>
+        `${scrolled ? "text-black" : "text-black"} hover:text-black/50 transition 
+         ${isActive ? "text-black/50" : ""}`;
+
     const links = (
         <>
-            <NavLink
-                to="/"
-                className={`${scrolled ? "text-black" : "text-white"} hover:text-yellow-400 transition`}>
+            <NavLink to="/" className={navClass}>
                 Home
             </NavLink>
-            <NavLink
-                to="all-issues"
-                className={`${scrolled ? "text-black" : "text-white"} hover:text-yellow-400 transition`}>
+
+            <NavLink to="all-issues" className={navClass}>
                 All Issues
             </NavLink>
-            <NavLink
-                to="about"
-                className={`${scrolled ? "text-black" : "text-white"} hover:text-yellow-400 transition`}>
+
+            <NavLink to="about" className={navClass}>
                 Our Story
             </NavLink>
-            <NavLink
-                to="contact"
-                className={`${scrolled ? "text-black" : "text-white"} hover:text-yellow-400 transition`}>
+
+            <NavLink to="contact" className={navClass}>
                 Contact
             </NavLink>
         </>
@@ -53,19 +52,26 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-white/40 backdrop-blur-xl border-black" : "bg-transparent border-white"
-                }`}>
+            className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+                scrolled
+                    ? "bg-white/40 backdrop-blur-xl border-black"
+                    : "bg-[#EBEBEB] border-white"
+            }`}>
             <div className="max-w-[1400px] mx-auto">
                 <div
-                    className={`flex items-center justify-between py-5 border-b ${scrolled ? "border-black/30" : "border-white/30"
-                        }`}>
+                    className={`flex items-center justify-between py-3 border-b ${
+                        scrolled ? "border-black/30" : "border-white/30"
+                    }`}>
+
                     {/* Logo */}
-                    <div className="text-yellow-400">
+                    <div className="text-black">
                         <Logo />
                     </div>
 
                     {/* Desktop Links */}
-                    <div className="hidden lg:flex items-center gap-8 text-black">{links}</div>
+                    <div className="hidden lg:flex items-center gap-8 text-black">
+                        {links}
+                    </div>
 
                     {/* Profile + Login/logout */}
                     <div className="flex items-center gap-5">
@@ -75,17 +81,25 @@ const Navbar = () => {
                                 {/* dashboard */}
                                 <NavLink
                                     to="/dashboard"
-                                    className={`btn transition-colors duration-300 btn-outline px-4 py-2 text-sm hover:text-black hover:bg-white ${scrolled ? "bg-white/40 text-black" : "bg-transparent text-white"}`}>
+                                    className={({ isActive }) =>
+                                        `rounded-sm transition-colors duration-300 px-4 py-2 text-sm hover:text-black hover:bg-white ${
+                                            isActive
+                                                ? "bg-black text-white"
+                                                : scrolled
+                                                ? "bg-black text-white"
+                                                : "text-black hover:text-black/30 bg-white"
+                                        }`
+                                    }>
                                     Dashboard
                                 </NavLink>
-
 
                                 {/* Profile Image */}
                                 <button onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}>
                                     <img
                                         src={user.photoURL || user.photo}
                                         className="h-9 w-9 rounded-full object-cover"
-                                        alt="Profile" />
+                                        alt="Profile"
+                                    />
                                 </button>
 
                                 {/* Dropdown */}
@@ -114,7 +128,11 @@ const Navbar = () => {
                         ) : (
                             <Link
                                 to="/login"
-                                className={`btn btn-outline ${scrolled ? "text-black" : "text-white hover:text-black"}`}>
+                                className={`rounded-sm transition-colors duration-300 px-4 py-2 text-sm hover:bg-black ${
+                                    scrolled
+                                        ? "bg-black text-white hover:text-black hover:bg-white"
+                                        : "text-black hover:text-white bg-white"
+                                }`}>
                                 Login
                             </Link>
                         )}
@@ -122,7 +140,9 @@ const Navbar = () => {
                         {/* Mobile Menu Button */}
                         <div className="lg:hidden">
                             <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                                <span className="material-icons-outlined text-white text-3xl">menu</span>
+                                <span className="material-icons-outlined text-white text-3xl">
+                                    menu
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -132,8 +152,9 @@ const Navbar = () => {
             {/* Mobile Menu */}
             {mobileMenuOpen && (
                 <div
-                    className={`lg:hidden w-full shadow-xl px-6 py-4 ${scrolled ? "bg-white text-black" : "bg-black/40 text-white"
-                        }`}>
+                    className={`lg:hidden w-full shadow-xl px-6 py-4 ${
+                        scrolled ? "bg-white text-black" : "bg-black/40 text-white"
+                    }`}>
                     <div className="flex flex-col space-y-4">{links}</div>
                 </div>
             )}

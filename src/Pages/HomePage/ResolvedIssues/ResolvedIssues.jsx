@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import axiosSecure from "../../../Services/axiosSecure";
+import Loading from "../../../Components/Loading/Loading";
 
 const ResolvedIssues = () => {
     const { data: issues = [], isLoading } = useQuery({
@@ -14,46 +15,33 @@ const ResolvedIssues = () => {
         refetchOnWindowFocus: false, // prevent re-render on scroll/tab focus
     });
 
-    // ✅ Memoized resolved issues (performance)
     const resolvedIssues = useMemo(() => {
         return issues
             .filter(issue => issue.status === "resolved")
             .slice(0, 6);
     }, [issues]);
 
-    // ✅ Skeleton loader (smooth UX)
     if (isLoading) {
-        return (
-            <section className="py-20 bg-gray-100">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {[...Array(6)].map((_, i) => (
-                            <div
-                                key={i}
-                                className="h-72 bg-white rounded-xl shadow-md animate-pulse"
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
-        );
+        return <Loading></Loading>
     }
 
     return (
-        <section className="bg-gradient-to-b from-gray-100 to-white py-16 relative">
-            <div className="max-w-7xl mx-auto px-4">
+        <section className="bg-[#E3D2CD] py-16 relative">
+            <div className="max-w-[1400px] mx-auto">
 
-                {/* 🔹 Heading */}
+                {/* Heading */}
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+
+                    <span className="inline-block px-3 py-1 mb-6 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
                         Recently Resolved Issues
-                    </h2>
-                    <p className="text-gray-500 mt-2">
+                    </span>
+
+                    <p className="mt-2 text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white">
                         Problems successfully solved for a better community
                     </p>
                 </div>
 
-                {/* 🔹 Cards */}
+                {/* Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {resolvedIssues.map(issue => (
                         <div
@@ -77,7 +65,7 @@ const ResolvedIssues = () => {
                             )}
 
                             <div className="p-5 flex flex-col flex-1">
-                                <span className="text-xs text-green-600 font-semibold mb-1">
+                                <span className="text-xs text-black/50 font-semibold mb-1">
                                     ✔ Resolved
                                 </span>
 
@@ -95,7 +83,7 @@ const ResolvedIssues = () => {
 
                                 <Link
                                     to={`/dashboard/issue/${issue._id}`}
-                                    className="btn btn-sm btn-primary mt-4 w-full"
+                                    className="btn bg-black text-white hover:text-black hover:bg-white btn-sm mt-4 w-full"
                                 >
                                     View Details
                                 </Link>
@@ -104,7 +92,7 @@ const ResolvedIssues = () => {
                     ))}
                 </div>
 
-                {/* 🔹 Empty State */}
+                {/* Empty State */}
                 {resolvedIssues.length === 0 && (
                     <div className="text-center text-gray-500 mt-12">
                         No resolved issues yet.

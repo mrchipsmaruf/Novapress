@@ -41,8 +41,8 @@ const ManageUsers = () => {
     if (isLoading) return <p>Loading users...</p>;
 
     return (
-        <div className="p-6">
-            <h1 className="text-3xl font-semibold mb-6">Manage Users</h1>
+        <div className="">
+            <h1 className="inline-block px-6 py-2 border border-black/10 rounded-full text-xs uppercase tracking-[0.3em] font-semibold text-gray-700 mb-6">Manage Users</h1>
 
             <div className="overflow-x-auto">
                 <table className="table w-full">
@@ -73,7 +73,7 @@ const ManageUsers = () => {
                                     {u.role !== "staff" && (
                                         <button
                                             onClick={() => makeStaff(u.email)}
-                                            className="btn btn-sm bg-blue-500 text-white"
+                                            className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4"
                                         >
                                             Make Staff
                                         </button>

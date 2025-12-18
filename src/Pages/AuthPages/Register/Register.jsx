@@ -108,7 +108,7 @@ const Register = () => {
 
                         {/* LEFT SECTION */}
                         <div className="text-white space-y-6">
-                            <span className="inline-block py-1 px-5 rounded-full border border-gray-300 text-[15px] font-semibold uppercase bg-white text-black">
+                            <span className="inline-block px-3 py-1 mb-6 border border-white/50 dark:border-white/20 rounded-full text-xl uppercase tracking-[0.2em] font-bold">
                                 Create an account
                             </span>
 
@@ -129,9 +129,7 @@ const Register = () => {
 
                         {/* RIGHT FORM SECTION */}
                         <div className="dark:bg-black/20 backdrop-blur-lg p-8 md:p-12 rounded-lg shadow-2xl md:w-[650px] w-full">
-
-                            <h2 className="text-3xl font-bold text-white/70">Create an account</h2>
-                            <p className="pb-5 text-white/70">
+                            <p className="pb-5 text-2xl text-white/70">
                                 Please sign up to continue.
                             </p>
 

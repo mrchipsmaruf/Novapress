@@ -4,11 +4,9 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import API from "../../Services/axiosSecure";
 import UseAuth from "../../Hooks/UseAuth";
+import Loading from "../../Components/Loading/Loading";
+import { BiSolidUpvote } from "react-icons/bi";
 
-/**
- * HOME — ALL ISSUES PAGE
- * Public view with filters, search, upvote, pagination & priority sorting
- */
 
 const categories = ["Category", "Road", "Electricity", "Water", "Garbage", "Footpath", "Drainage", "Other"];
 const statuses = ["Status", "Pending", "In-Progress", "Resolved", "Closed"];
@@ -133,13 +131,21 @@ export default function AllIssues() {
     const pages = Math.ceil(total / perPage);
     const pageItems = filteredIssues.slice((page - 1) * perPage, page * perPage);
 
-    if (isLoading) return <div className="p-6 text-center">Loading issues...</div>;
+    if (isLoading) return <div className="p-6 text-center"><Loading></Loading></div>;
     if (isError) return <div className="p-6 text-center text-red-600">{error.message}</div>;
 
     return (
-        <div className="bg-gray-100 py-10">
-            <div className="max-w-[1400px] mx-auto px-4">
-                <h2 className="text-3xl font-bold mb-6">All Issues</h2>
+        <div className="bg-gray-100 -mt-10">
+            <div className="max-w-[1400px] mx-auto  py-10">
+                <header className="pb-12 md:pt-5 md:pb-20 text-center px-4">
+                <div className="inline-block px-3 py-1 mb-6 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
+                    All Issues
+                </div>
+
+                <h1 className="text-4xl md:text-6xl lg:text-5xl font-semibold mb-4">
+                    Track, explore, and stay informed about <br /> reported public infrastructure issues.
+                </h1>
+            </header>
 
                 {/* Filters */}
                 <div className="flex flex-wrap gap-3 mb-6">
@@ -200,13 +206,13 @@ export default function AllIssues() {
                             <div className="mt-4 flex justify-between items-center">
                                 <button
                                     onClick={() => handleUpvote(issue)}
-                                    className="btn btn-sm btn-ghost">
-                                    👍 {issue.upvotes || 0}
+                                    className="btn bg-black/70 text-white hover:text-black hover:bg-white btn-sm py-4">
+                                    <BiSolidUpvote /> {issue.upvotes || 0}
                                 </button>
 
                                 <Link
                                     to={`/dashboard/issue/${issue._id}`}
-                                    className="btn btn-sm btn-primary">
+                                    className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4">
                                     View Details
                                 </Link>
                             </div>

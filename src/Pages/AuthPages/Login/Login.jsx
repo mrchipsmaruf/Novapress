@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import formBgVideo from "../../../assets/formVideo.mp4";
 import { Link, useLocation, useNavigate } from "react-router";
 import { FaGoogle } from "react-icons/fa";
@@ -8,22 +8,27 @@ import axios from "axios";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { googleSignIn, signInUser } = UseAuth();
+    const { googleSignIn, signInUser, user } = UseAuth();
 
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Helper: Check if backend returned an empty object
+    useEffect(() => {
+        if (user) {
+            navigate("/", { replace: true });
+        }
+    }, [user, navigate]);
+
     const isEmptyUser = (obj) => !obj || Object.keys(obj).length === 0;
 
-    // GOOGLE LOGIN HANDLER
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(async (result) => {
-
                 const user = result.user;
 
-                let res = await axios.get(`https://novapress-server.vercel.app/users/${user.email}`);
+                let res = await axios.get(
+                    `https://novapress-server.vercel.app/users/${user.email}`
+                );
 
                 if (isEmptyUser(res.data)) {
                     const newUser = {
@@ -35,23 +40,26 @@ const Login = () => {
                         premium: false
                     };
 
-                    await axios.post("https://novapress-server.vercel.app/users", newUser);
+                    await axios.post(
+                        "https://novapress-server.vercel.app/users",
+                        newUser
+                    );
                 }
 
-                navigate(location?.state || "/");
+                navigate("/", { replace: true });
             })
             .catch(error => console.log(error));
     };
 
-    // EMAIL + PASSWORD LOGIN HANDLER
     const handleLogin = async (data) => {
         try {
             const result = await signInUser(data.email, data.password);
             const email = result.user.email;
 
-            let res = await axios.get(`https://novapress-server.vercel.app/users/${email}`);
+            let res = await axios.get(
+                `https://novapress-server.vercel.app/users/${email}`
+            );
 
-            // Auto-create user in DB if missing
             if (isEmptyUser(res.data)) {
                 const newUser = {
                     name: result.user.displayName || "No Name",
@@ -61,24 +69,18 @@ const Login = () => {
                     isBlocked: false,
                     premium: false
                 };
-                await axios.post("https://novapress-server.vercel.app/users", newUser);
-                res = { data: newUser };
+                await axios.post(
+                    "https://novapress-server.vercel.app/users",
+                    newUser
+                );
             }
 
-            // BLOCKED USER
-            if (res.data.isBlocked) {
+            if (res.data?.isBlocked) {
                 alert("Your account is blocked. Contact support.");
                 return;
             }
 
-            // ROLE-BASED NAVIGATION
-            if (res.data.role === "admin") {
-                navigate("/dashboard/admin-dashboard");
-            } else if (res.data.role === "staff") {
-                navigate("/dashboard/staff-dashboard");
-            } else {
-                navigate(location?.state || "/");
-            }
+            navigate("/", { replace: true });
 
         } catch (error) {
             console.log(error);
@@ -105,7 +107,7 @@ const Login = () => {
 
                         {/* Left Section */}
                         <div className="text-white space-y-6">
-                            <span className="inline-block py-1 px-5 rounded-full border border-gray-300 text-[15px] font-semibold uppercase bg-white text-black">
+                            <span className="inline-block px-3 py-1 mb-6 border border-white/50 dark:border-white/20 rounded-full text-xl uppercase tracking-[0.2em] font-bold">
                                 Login
                             </span>
                             <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
@@ -131,8 +133,7 @@ const Login = () => {
                         <div className="dark:bg-black/20 backdrop-blur-lg p-8 md:p-12 rounded-lg shadow-2xl">
                             <div className="space-y-8">
                                 <div>
-                                    <h2 className="text-3xl font-bold text-white/70">Login</h2>
-                                    <p className="mt-2 text-white/70">Please sign in to continue.</p>
+                                    <p className="mt-2 text-2xl text-white/70">Please login to continue.</p>
                                 </div>
 
                                 <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
@@ -161,7 +162,6 @@ const Login = () => {
                                         {errors.password && <p className="text-white">Password is required</p>}
                                     </div>
 
-                                    {/* Login Button */}
                                     <button
                                         type="submit"
                                         className="w-full hover:text-black btn text-white/70 btn-outline"
@@ -175,7 +175,6 @@ const Login = () => {
                                         <div className="flex-1 border-t border-white/40"></div>
                                     </div>
 
-                                    {/* Google Login */}
                                     <button
                                         type="button"
                                         onClick={handleGoogleSignIn}

@@ -1,130 +1,116 @@
-import React from "react";
-import { FaArrowRight, FaCheckCircle } from "react-icons/fa";
-import { MdBolt, MdInsights, MdOutlineVisibility } from "react-icons/md";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
-import { Link } from "react-router";
+import React, { useState } from "react";
 
 const Feature = () => {
+  const features = [
+    {
+      key: "transparency",
+      label: "Real-Time Transparency",
+      image: "https://i.ibb.co.com/XfLLHVvs/pexels-daniel-clark-346904598-14134524.jpg",
+    },
+    {
+      key: "routing",
+      label: "Smart Issue Routing",
+      image: "https://i.ibb.co.com/JFrczgRB/pexels-jeshoots-com-147458-442584.jpg",
+    },
+    {
+      key: "community",
+      label: "Community Reporting",
+      image: "https://i.ibb.co.com/BH8tNfCR/pexels-olly-3791664.jpg",
+    },
+    {
+      key: "verification",
+      label: "Verified Resolutions",
+      image: "https://i.ibb.co.com/C3kxKCxj/pexels-alex-albert-361284794-15437562.jpg",
+    },
+    {
+      key: "insights",
+      label: "Data-Driven Insights",
+      image: "https://i.ibb.co.com/DP18Yfpm/pexels-goumbik-590022.jpg",
+    },
+    {
+      key: "service",
+      label: "Faster Public Service",
+      image: "https://i.ibb.co.com/Mk0nnJKK/pexels-edmond-dantes-7103122.jpg",
+    },
+  ];
+
+  const [active, setActive] = useState(null);
+
   return (
-    <section className="-mt-10 bg-[#F5F5F5] py-24 rounded-t-4xl bg-background-light dark:bg-background-dark relative">
+    <section className="-mt-10 bg-[#EBEBEB] py-24 rounded-t-4xl relative">
       <div className="max-w-[1400px] mx-auto">
 
-        {/* Header */}
-        <div className="text-center mb-16">
-          <span className="inline-block py-1 px-5 rounded-full border border-gray-300 dark:border-gray-600 text-[15px] font-semibold uppercase bg-white dark:bg-gray-800 text-text-secondary-light dark:text-text-secondary-dark">
+        {/* ================= HEADER ================= */}
+        <div className="text-center mb-20">
+          <span className="inline-block px-3 py-1 mb-6 border border-black/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
             Why Choose Novapress
           </span>
 
-          <h2 className="mt-2 text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white">
-            Empowering Citizens, <br className="hidden md:block" /> Streamlining Service.
+          <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900">
+            Empowering Citizens, <br className="hidden md:block" />
+            Streamlining Service.
           </h2>
 
-          <p className="mt-4 max-w-3xl text-2xl mx-auto text-gray-600 dark:text-gray-400">
+          <p className="mt-4 max-w-3xl text-xl mx-auto text-gray-600">
             We bridge the gap between public needs and government action through transparent, data-driven technology.
           </p>
         </div>
 
-        {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            {
-              icon: <MdOutlineVisibility />,
-              title: "Total Transparency",
-              desc: "Track the status of every reported issue in real-time. See who is assigned, expected resolution dates, and photo updates.",
-            },
-            {
-              icon: <MdBolt />,
-              title: "Rapid Response",
-              desc: "Automated routing sends reports directly to the nearest available maintenance crew, cutting downtime by up to 40%.",
-            },
-            {
-              icon: <MdInsights />,
-              title: "Data Collection",
-              desc: "Aggregated community data helps identify infrastructure hotspots, enabling proactive maintenance planning.",
-            },
-            {
-              icon: <RiVerifiedBadgeFill />,
-              title: "Efficient Delivery",
-              desc: "Streamlined workflows ensure resources are used effectively, delivering better public services at lower costs.",
-            },
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="group relative bg-white dark:bg-surface-dark p-8 rounded-2xl border border-gray-100 dark:border-white/5 shadow-xl shadow-gray-200/50 dark:shadow-none hover:-translate-y-1 transition-all duration-300">
-              <div className="absolute inset-0 bg-linear-to-b from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 "></div>
+        {/* ================= MAIN WRAPPER ================= */}
+        <div className="hidden lg:flex gap-20 items-center h-[520px]">
 
-              <div className="relative z-10 ">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl text-yellow-400 mb-6 transition-colors duration-300">
-                  <span className="material-icons-outlined text-3xl">{item.icon}</span>
-                </div>
+          {/* ================= LEFT : IMAGES ================= */}
+          <div className="flex-1 h-full relative rounded-2xl overflow-hidden shadow-2xl">
 
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 font-display">
-                  {item.title}
-                </h3>
+            {/* Default image */}
+            <img
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                active === null ? "opacity-100" : "opacity-0"
+              }`}
+              src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+              alt="City Infrastructure"
+            />
 
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
-                  {item.desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Smart Mapping Section */}
-        <div className="mt-24 bg-white dark:bg-surface-dark-lighter rounded-3xl overflow-hidden shadow-2xl dark:shadow-none border border-gray-200 dark:border-white/5">
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-
-            {/* Left content */}
-            <div className="p-10 md:p-16 flex flex-col justify-center">
-              <div className="flex items-center space-x-2 mb-6">
-                <span className="font-medium tracking-wide text-yellow-400 text-sm uppercase">
-                  Smart Mapping Technology
-                </span>
-              </div>
-
-              <h3 className="text-3xl md:text-4xl font-display font-bold text-gray-900 dark:text-white mb-6">
-                Visualize Your City's Health in Real-Time
-              </h3>
-
-              <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg leading-relaxed">
-                Our interactive map provides a bird's-eye view of all ongoing maintenance.
-                Filter by district, issue type, or urgency to understand how your city is evolving every day.
-              </p>
-
-              <ul className="space-y-4 mb-8">
-                {[
-                  "Live GPS tracking of maintenance vehicles",
-                  "Heatmaps for high-priority infrastructure issues",
-                  "Historical data analysis for better future planning",
-                ].map((text, i) => (
-                  <li key={i} className="flex items-center">
-                    <span className="material-icons-outlined text-yellow-400 mr-3 "><FaCheckCircle /></span>
-                    <span className="text-gray-700 dark:text-gray-300">{text}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link
-                to={"about"}
-                className="inline-flex items-center text-yellow-400 font-semibold hover:text-gray-900 transition-colors group">
-                Learn more about our technology
-                <span className="material-icons-outlined ml-2 transform group-hover:translate-x-1 transition-transform">
-                  <FaArrowRight />
-                </span>
-              </Link>
-            </div>
-
-            {/* Right image */}
-            <div className="relative h-96 lg:h-auto">
+            {/* Hover image */}
+            {active !== null && (
               <img
-                className="absolute inset-0 w-full h-full object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTFWuydJxS7zPUf_8JrQslEbhIDm5d1gfLN1nHYFXvfYQPH1YXh84KgJRfppprHs81VRhA8mWsehzPrGJXDYYhxTY1zi7KrFmxoOicskVsg0qMT80OBkHJuKo2cItTC4SnWsJsQaPKSm-74g9LC2-DGJJVg6EGIzSVQLNdV_0QtBK-cM2_d0T5IiaTHcCVCsZtgvtcYZBWLNQUvzCpzrLLMYQXOJku19FqEe2_IgQM-C_Q7J5xzcAVDXqRzpef2JYrnKWtXB5fdPFH"
-                alt="Digital map interface"/>
-              <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
-              <div className="absolute inset-0 bg-linear-to-r from-white dark:from-surface-dark-lighter to-transparent lg:w-32"></div>
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700 opacity-100"
+                src={features[active].image}
+                alt="Feature"
+              />
+            )}
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/40 z-10" />
+          </div>
+
+          {/* ================= RIGHT : TEXT ================= */}
+          <div className="flex-1 flex flex-col justify-center gap-3">
+
+            <div className="mb-6">
+              <span className="inline-block px-3 py-1 border border-black/20 rounded-full text-xs font-semibold uppercase tracking-widest">
+                Features
+              </span>
             </div>
 
+            {features.map((item, index) => (
+              <div
+                key={item.key}
+                onMouseEnter={() => setActive(index)}
+                onMouseLeave={() => setActive(null)}
+                className="cursor-pointer transition-all duration-300">
+                <h3
+                  className={`text-4xl md:text-5xl font-bold transition-colors duration-300 ${
+                    active === index
+                      ? "text-gray-900"
+                      : "text-gray-400 hover:text-gray-900"
+                  }`}>
+                  {item.label}
+                </h3>
+              </div>
+            ))}
           </div>
+
         </div>
       </div>
     </section>

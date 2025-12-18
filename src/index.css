@@ -6,13 +6,24 @@
 
 
 @layer base {
+
   html,
   body,
   :root {
-    font-family: "Baloo Da 2", sans-serif !important;
+    font-family: "Manrope", sans-serif !important;
   }
 }
 
 .logoText {
-  font-family: "Caesar Dressing", system-ui;
+  font-family: "Stack Sans Notch", sans-serif;
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+

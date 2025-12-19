@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import UseAuth from "../../../Hooks/UseAuth";
+import axiosSecure from "../../../Services/axiosSecure";
 
 const SetPassword = () => {
     const { register, handleSubmit } = useForm();
@@ -13,16 +14,25 @@ const SetPassword = () => {
         try {
             await setPasswordForGoogleUser(data.password);
 
+            await axiosSecure.patch(
+                `https://novapress-server.vercel.app/users/password-set`,
+                {},
+                {
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem("access-token")}`
+                    }
+                }
+            );
+
             Swal.fire({
                 icon: "success",
                 title: "Password Set Successfully",
                 text: "You can now log in using email & password."
             });
 
-            navigate("/login");
+            navigate("/");
 
         } catch (error) {
-
             if (error.code === "auth/requires-recent-login") {
                 Swal.fire(
                     "Session Expired",

@@ -36,9 +36,9 @@ const testimonials = [
 export default function Testimonials() {
     return (
         <section className="pb-24 pt-10 relative z-10 bg-[#EBEBEB] w-full">
-            <div className="max-w-[1400px] pt-5 mx-auto">
+            <div className="max-w-[1400px] pt-5 mx-auto px-4 sm:px-6 md:px-0">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-14">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-14 gap-8 md:gap-0">
                     <div className="max-w-3xl space-y-7">
                         <span className="inline-block px-3 py-1 mb-6 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
                             VOICES OF THE COMMUNITY
@@ -48,15 +48,18 @@ export default function Testimonials() {
                             Making our city better.
                         </h2>
 
-                        <p className="mt-4 max-w-3xl text-2xl mx-auto text-gray-600 dark:text-gray-400">
+                        <p className="mt-4 max-w-3xl text-xl md:text-2xl mx-auto text-gray-600 dark:text-gray-400">
                             See how citizens are using our platform to report issues, track
                             progress, and improve their neighborhoods.
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-4 mt-8 md:mt-0">
-                        <Link to="/contact"
-                            className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4 w-full">Give Your Feedback <MdArrowOutward />
+                    <div className="flex items-center gap-4 mt-4 md:mt-0 w-full md:w-auto">
+                        <Link
+                            to="/contact"
+                            className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4 w-full md:w-auto"
+                        >
+                            Give Your Feedback <MdArrowOutward />
                         </Link>
                     </div>
                 </div>
@@ -79,12 +82,12 @@ export default function Testimonials() {
                         1024: { slidesPerView: 3, spaceBetween: 28 },
                         1400: { slidesPerView: 3, spaceBetween: 28 },
                     }}
-                    className="overflow-visible">
+                    className="overflow-visible"
+                >
                     {testimonials.map((t, i) => (
                         <SwiperSlide key={i} className="h-auto!">
-                            <div
-                                className="h-full flex">
-                                <article className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col w-full">
+                            <div className="h-full flex">
+                                <article className="bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col w-full relative">
 
                                     {/* Quote Icon */}
                                     <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
@@ -99,14 +102,14 @@ export default function Testimonials() {
                                         </span>
                                     </div>
 
-                                    {/* title */}
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                                    <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-4">
                                         "{t.title}"
                                     </h3>
 
                                     <p className="text-gray-600 leading-relaxed grow">
                                         {t.text}
                                     </p>
+
                                     <div className="mt-6 flex-none" />
                                 </article>
                             </div>

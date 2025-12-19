@@ -3,6 +3,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
 import banner1 from "../../../assets/banner1.jpg";
 import banner2 from "../../../assets/banner2.jpg";
 import banner3 from "../../../assets/banner3.jpg";
@@ -44,24 +45,29 @@ export default function Banner() {
     ];
 
     return (
-        <div className="sticky top-0 left-0 w-full h-[83.5vh] -mt-25 overflow-hidden z-0">
+        <div className="sticky top-0 left-0 w-full h-[70vh] sm:h-[75vh] md:h-[83.5vh] -mt-25 overflow-hidden z-0">
             <Swiper
-                modules={[ Pagination, Autoplay]}
+                modules={[Pagination, Autoplay]}
                 pagination={{ clickable: true }}
                 autoplay={{ delay: 3000 }}
                 loop={true}
-                className="h-full overflow-hidden">
+                className="h-full"
+            >
                 {slides.map((item) => (
                     <SwiperSlide key={item.id}>
+                        <div
+                            className="w-full h-full bg-cover bg-center flex items-center"
+                            style={{ backgroundImage: `url(${item.image})` }}
+                        >
+                            {/* Overlay */}
+                            <div className="absolute inset-0 bg-black/40"></div>
 
-                        <div className="w-full h-full bg-cover bg-center flex flex-col justify-center px-10 md:px-20 absolute inset-0"
-                            style={{ backgroundImage: `url(${item.image})` }}>
-                                <div className="absolute inset-0 bg-black/40"></div>
-                            <div className="w-[1400px] mx-auto -mb-70">
-                                <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">
+                            {/* Content */}
+                            <div className="relative w-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-0 text-left">
+                                <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white drop-shadow-lg leading-tight">
                                     {item.title}
                                 </h1>
-                                <p className="text-lg text-white md:text-2xl mt-4 drop-shadow">
+                                <p className="text-base sm:text-lg md:text-2xl mt-3 md:mt-4 text-white drop-shadow max-w-3xl">
                                     {item.subtitle}
                                 </p>
                             </div>

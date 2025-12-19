@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import formBgVideo from "../../../assets/formVideo.mp4";
 import { Link, useLocation, useNavigate } from "react-router";
 import { FaGoogle } from "react-icons/fa";
@@ -8,16 +8,10 @@ import axios from "axios";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { googleSignIn, signInUser, user, hasPasswordProvider } = UseAuth();
+    const { googleSignIn, signInUser } = UseAuth();
 
     const location = useLocation();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user) {
-            navigate("/", { replace: true });
-        }
-    }, [user, navigate]);
 
     const isEmptyUser = (obj) => !obj || Object.keys(obj).length === 0;
 
@@ -26,15 +20,13 @@ const Login = () => {
             const result = await googleSignIn();
             const user = result.user;
 
-            const hasPassword = await hasPasswordProvider(user.email);
-
-            if (!hasPassword) {
-                navigate("/set-password", { replace: true });
-                return;
-            }
-
             const res = await axios.get(
-                `https://novapress-server.vercel.app/users/${user.email}`
+                `https://novapress-server.vercel.app/users/${user.email}`,
+                {
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem("access-token")}`
+                    }
+                }
             );
 
             if (!res.data || Object.keys(res.data).length === 0) {
@@ -43,12 +35,21 @@ const Login = () => {
                     {
                         name: user.displayName,
                         email: user.email,
-                        photo: user.photoURL,
+                        image: user.photoURL,
                         role: "citizen",
                         isBlocked: false,
-                        premium: false
+                        premium: false,
+                        hasPassword: false
                     }
                 );
+
+                navigate("/set-password", { replace: true });
+                return;
+            }
+
+            if (!res.data.hasPassword) {
+                navigate("/set-password", { replace: true });
+                return;
             }
 
             navigate("/", { replace: true });
@@ -67,6 +68,18 @@ const Login = () => {
             let res = await axios.get(
                 `https://novapress-server.vercel.app/users/${email}`
             );
+
+            if (!res.data?.hasPassword) {
+                await axios.patch(
+                    `https://novapress-server.vercel.app/users/password-set`,
+                    {},
+                    {
+                        headers: {
+                            authorization: `Bearer ${localStorage.getItem("access-token")}`
+                        }
+                    }
+                );
+            }
 
             if (isEmptyUser(res.data)) {
                 const newUser = {
@@ -96,7 +109,7 @@ const Login = () => {
     };
 
     return (
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden min-h-screen">
 
             {/* Background Video */}
             <video
@@ -105,74 +118,95 @@ const Login = () => {
                 loop
                 muted
                 playsInline
-                className="fixed top-0 left-0 w-full h-full object-cover z-0"
+                className="fixed top-0 left-0 w-full h-full object-cover z-0 transition-opacity duration-700"
             />
             <div className="fixed inset-0 bg-black/40 z-0" />
 
-            <div className="relative z-10 py-25">
+            <div className="relative z-10 py-16 md:py-25 px-4 sm:px-6">
                 <div className="w-full max-w-[1400px] mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
 
                         {/* Left Section */}
-                        <div className="text-white space-y-6">
-                            <span className="inline-block px-3 py-1 mb-6 border border-white/50 dark:border-white/20 rounded-full text-xl uppercase tracking-[0.2em] font-bold">
+                        <div className="text-white space-y-6 transition-all duration-700">
+                            <span className="inline-block px-3 py-1 mb-6 border border-white/50 dark:border-white/20 rounded-full text-lg md:text-xl uppercase tracking-[0.2em] font-bold">
                                 Login
                             </span>
-                            <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
+
+                            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
                                 Welcome Back to
                             </h1>
-                            <h1 className="logoText text-5xl md:text-8xl font-bold tracking-tight">
+
+                            <h1 className="logoText text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight">
                                 NOVAPRESS
                             </h1>
 
-                            <p className="text-lg text-white">
+                            <p className="text-base sm:text-lg text-white">
                                 Please sign in to continue improving public infrastructure.
                             </p>
 
-                            <p className="flex items-center gap-5">
+                            <p className="flex flex-wrap items-center gap-4">
                                 New to Novapress?
-                                <Link state={location.state} to="/register" className="btn btn-outline">
+                                <Link
+                                    state={location.state}
+                                    to="/register"
+                                    className="btn btn-outline transition-all duration-300 hover:scale-[1.02]"
+                                >
                                     Create an account
                                 </Link>
                             </p>
                         </div>
 
                         {/* Login Form */}
-                        <div className="dark:bg-black/20 backdrop-blur-lg p-8 md:p-12 rounded-lg shadow-2xl">
+                        <div className="dark:bg-black/20 backdrop-blur-lg p-6 sm:p-8 md:p-12 rounded-lg shadow-2xl transition-all duration-700">
                             <div className="space-y-8">
-                                <div>
-                                    <p className="mt-2 text-2xl text-white/70">Please login to continue.</p>
-                                </div>
+                                <p className="mt-2 text-xl sm:text-2xl text-white/70">
+                                    Please login to continue.
+                                </p>
 
-                                <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
+                                <form
+                                    onSubmit={handleSubmit(handleLogin)}
+                                    className="space-y-4"
+                                >
 
                                     {/* Email */}
                                     <div>
-                                        <label className="block text-sm font-medium text-white/70">Email</label>
+                                        <label className="block text-sm font-medium text-white/70">
+                                            Email
+                                        </label>
                                         <input
                                             type="email"
                                             {...register("email", { required: true })}
                                             placeholder="Enter your email"
-                                            className="block w-full mt-1 px-4 py-3 bg-white/70 border rounded-md text-black"
+                                            className="block w-full mt-1 px-4 py-3 bg-white/70 border rounded-md text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black/40"
                                         />
-                                        {errors.email && <p className="text-white">Email is required</p>}
+                                        {errors.email && (
+                                            <p className="text-white text-sm mt-1">
+                                                Email is required
+                                            </p>
+                                        )}
                                     </div>
 
                                     {/* Password */}
                                     <div>
-                                        <label className="block text-sm font-medium text-white/70">Password</label>
+                                        <label className="block text-sm font-medium text-white/70">
+                                            Password
+                                        </label>
                                         <input
                                             type="password"
                                             {...register("password", { required: true })}
                                             placeholder="Enter your password"
-                                            className="block w-full mt-1 px-4 py-3 bg-white/70 border rounded-md text-black"
+                                            className="block w-full mt-1 px-4 py-3 bg-white/70 border rounded-md text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black/40"
                                         />
-                                        {errors.password && <p className="text-white">Password is required</p>}
+                                        {errors.password && (
+                                            <p className="text-white text-sm mt-1">
+                                                Password is required
+                                            </p>
+                                        )}
                                     </div>
 
                                     <button
                                         type="submit"
-                                        className="w-full hover:text-black btn text-white/70 btn-outline"
+                                        className="w-full hover:text-black btn text-white/70 btn-outline transition-all duration-300 hover:scale-[1.02]"
                                     >
                                         Login
                                     </button>
@@ -186,7 +220,7 @@ const Login = () => {
                                     <button
                                         type="button"
                                         onClick={handleGoogleSignIn}
-                                        className="w-full btn hover:text-black text-white/70 btn-outline"
+                                        className="w-full btn hover:text-black text-white/70 btn-outline transition-all duration-300 hover:scale-[1.02]"
                                     >
                                         Continue with Google <FaGoogle />
                                     </button>

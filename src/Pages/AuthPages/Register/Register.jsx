@@ -22,23 +22,36 @@ const Register = () => {
             const result = await googleSignIn();
             const user = result.user;
 
-            const newUser = {
-                name: user.displayName,
-                email: user.email,
-                photo: user.photoURL,
-                role: "citizen",
-                isBlocked: false,
-                premium: false,
-            };
+            const res = await axios.get(
+                `https://novapress-server.vercel.app/users/${user.email}`
+            );
 
-            await saveUserToDB(newUser);
+            if (!res.data || Object.keys(res.data).length === 0) {
+                await saveUserToDB({
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                    role: "citizen",
+                    isBlocked: false,
+                    premium: false,
+                    hasPassword: false
+                });
 
-            navigate("/set-password");
+                navigate("/set-password", { replace: true });
+                return;
+            }
+
+            if (!res.data.hasPassword) {
+                navigate("/set-password", { replace: true });
+                return;
+            }
+
+            navigate("/", { replace: true });
+
         } catch (error) {
             console.error("Google registration error:", error);
         }
     };
-
 
     // -------------------------------------------
     // EMAIL REGISTRATION HANDLER
@@ -78,7 +91,6 @@ const Register = () => {
 
             await saveUserToDB(newUser);
 
-
             navigate(location.state || "/");
 
         } catch (error) {
@@ -87,7 +99,8 @@ const Register = () => {
     };
 
     return (
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden min-h-screen">
+
             {/* Background Video */}
             <video
                 src={formBgVideo}
@@ -95,82 +108,114 @@ const Register = () => {
                 loop
                 muted
                 playsInline
-                className="fixed top-0 left-0 w-full h-full object-cover z-0"
+                className="fixed top-0 left-0 w-full h-full object-cover z-0 transition-opacity duration-700"
             />
 
             <div className="fixed inset-0 bg-black/40 z-0" />
 
-            <div className="relative z-10 py-25">
+            <div className="relative z-10 py-16 md:py-25 px-4 sm:px-6">
                 <div className="w-full max-w-[1400px] mx-auto">
-                    <div className="flex md:flex-row flex-col gap-8 justify-between md:gap-16">
+                    <div className="flex flex-col md:flex-row gap-10 md:gap-16 justify-between items-center">
 
                         {/* LEFT SECTION */}
-                        <div className="text-white space-y-6">
-                            <span className="inline-block px-3 py-1 mb-6 border border-white/50 dark:border-white/20 rounded-full text-xl uppercase tracking-[0.2em] font-bold">
+                        <div className="text-white space-y-6 transition-all duration-700">
+                            <span className="inline-block px-3 py-1 mb-6 border border-white/50 dark:border-white/20 rounded-full text-lg md:text-xl uppercase tracking-[0.2em] font-bold">
                                 Create an account
                             </span>
 
-                            <h1 className="text-5xl md:text-6xl font-bold">Welcome to</h1>
-                            <h1 className="logoText text-5xl md:text-8xl font-bold">NOVAPRESS</h1>
+                            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
+                                Welcome to
+                            </h1>
 
-                            <p className="text-lg text-white/70">
+                            <h1 className="logoText text-5xl sm:text-6xl md:text-8xl font-bold">
+                                NOVAPRESS
+                            </h1>
+
+                            <p className="text-base sm:text-lg text-white/70">
                                 Register now to be a part of smarter civic management.
                             </p>
 
-                            <p className="flex items-center gap-5">
+                            <p className="flex flex-wrap items-center gap-4">
                                 Already have an account?
-                                <Link state={location.state} to={"/login"} className="btn btn-outline">
+                                <Link
+                                    state={location.state}
+                                    to={"/login"}
+                                    className="btn btn-outline transition-all duration-300 hover:scale-[1.02]"
+                                >
                                     Login
                                 </Link>
                             </p>
                         </div>
 
                         {/* RIGHT FORM SECTION */}
-                        <div className="dark:bg-black/20 backdrop-blur-lg p-8 md:p-12 rounded-lg shadow-2xl md:w-[650px] w-full">
-                            <p className="pb-5 text-2xl text-white/70">
+                        <div className="dark:bg-black/20 backdrop-blur-lg p-6 sm:p-8 md:p-12 rounded-lg shadow-2xl w-full md:w-[650px] transition-all duration-700">
+                            <p className="pb-5 text-xl sm:text-2xl text-white/70">
                                 Please sign up to continue.
                             </p>
 
-                            <form onSubmit={handleSubmit(handleRegistration)} className="space-y-2">
+                            <form
+                                onSubmit={handleSubmit(handleRegistration)}
+                                className="space-y-2"
+                            >
 
                                 {/* NAME */}
                                 <div>
-                                    <label className="block text-sm font-medium text-white/70">Name</label>
+                                    <label className="block text-sm font-medium text-white/70">
+                                        Name
+                                    </label>
                                     <input
                                         type="text"
                                         {...register('name', { required: true })}
                                         placeholder="Enter your name"
-                                        className="block w-full px-4 py-3 bg-white/70 border rounded-md text-black"
+                                        className="block w-full px-4 py-3 bg-white/70 border rounded-md text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black/40"
                                     />
-                                    {errors.name && <p className="text-white">Name is required</p>}
+                                    {errors.name && (
+                                        <p className="text-white text-sm">
+                                            Name is required
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* EMAIL */}
                                 <div>
-                                    <label className="block text-sm font-medium text-white/70">Email</label>
+                                    <label className="block text-sm font-medium text-white/70">
+                                        Email
+                                    </label>
                                     <input
                                         type="email"
                                         {...register('email', { required: true })}
                                         placeholder="Enter your email"
-                                        className="block w-full px-4 py-3 bg-white/70 border rounded-md text-black"
+                                        className="block w-full px-4 py-3 bg-white/70 border rounded-md text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black/40"
                                     />
-                                    {errors.email && <p className="text-white">Email is required</p>}
+                                    {errors.email && (
+                                        <p className="text-white text-sm">
+                                            Email is required
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* PHOTO UPLOAD */}
                                 <div>
-                                    <label className="block text-sm font-medium text-white/70">Photo upload</label>
+                                    <label className="block text-sm font-medium text-white/70">
+                                        Photo upload
+                                    </label>
                                     <input
                                         type="file"
                                         {...register('photo', { required: true })}
                                         className="block file-input w-full bg-white/70 border rounded-md text-black"
                                     />
-                                    {errors.photo && <p className="text-white">Photo is required</p>}
+                                    {errors.photo && (
+                                        <p className="text-white text-sm">
+                                            Photo is required
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* PASSWORD */}
                                 <div>
-                                    <label className="block text-sm font-medium text-white/70">Password</label>
+                                    <label className="block text-sm font-medium text-white/70">
+                                        Password
+                                    </label>
                                     <input
                                         type="password"
                                         {...register('password', {
@@ -179,17 +224,21 @@ const Register = () => {
                                             pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={};':"\\|,.<>/?]).{8,}$/
                                         })}
                                         placeholder="Enter your password"
-                                        className="block w-full px-4 py-3 bg-white/70 border rounded-md text-black"
+                                        className="block w-full px-4 py-3 bg-white/70 border rounded-md text-black transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black/40"
                                     />
 
                                     {errors.password?.type === 'required' &&
-                                        <p className="text-white">Password is required</p>
+                                        <p className="text-white text-sm">
+                                            Password is required
+                                        </p>
                                     }
                                     {errors.password?.type === 'minLength' &&
-                                        <p className="text-white">Password must be at least 8 characters</p>
+                                        <p className="text-white text-sm">
+                                            Password must be at least 8 characters
+                                        </p>
                                     }
                                     {errors.password?.type === 'pattern' &&
-                                        <p className="text-white">
+                                        <p className="text-white text-sm">
                                             Password must include uppercase, lowercase, number & special character.
                                         </p>
                                     }
@@ -198,7 +247,7 @@ const Register = () => {
                                 {/* SUBMIT BUTTON */}
                                 <button
                                     type="submit"
-                                    className="w-full btn mt-2 hover:text-black text-white/70 btn-outline border-white/30"
+                                    className="w-full btn mt-2 hover:text-black text-white/70 btn-outline border-white/30 transition-all duration-300 hover:scale-[1.02]"
                                 >
                                     Create an account
                                 </button>
@@ -214,7 +263,7 @@ const Register = () => {
                                 <button
                                     type="button"
                                     onClick={handleGoogleRegistration}
-                                    className="w-full btn hover:text-black text-white/70 btn-outline border-white/30"
+                                    className="w-full btn hover:text-black text-white/70 btn-outline border-white/30 transition-all duration-300 hover:scale-[1.02]"
                                 >
                                     Continue with Google <FaGoogle />
                                 </button>

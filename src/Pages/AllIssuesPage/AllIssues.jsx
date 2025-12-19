@@ -7,7 +7,6 @@ import UseAuth from "../../Hooks/UseAuth";
 import Loading from "../../Components/Loading/Loading";
 import { BiSolidUpvote } from "react-icons/bi";
 
-
 const categories = ["Category", "Road", "Electricity", "Water", "Garbage", "Footpath", "Drainage", "Other"];
 const statuses = ["Status", "Pending", "In-Progress", "Resolved", "Closed"];
 const priorities = ["Priority", "high", "normal"];
@@ -17,17 +16,14 @@ export default function AllIssues() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
-    // Filters
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("Category");
     const [status, setStatus] = useState("Status");
     const [priority, setPriority] = useState("Priority");
 
-    // Pagination
     const [page, setPage] = useState(1);
     const perPage = 9;
 
-    // Fetch issues
     const { data: issues = [], isLoading, isError, error } = useQuery({
         queryKey: ["allIssues"],
         queryFn: async () => {
@@ -37,7 +33,6 @@ export default function AllIssues() {
         staleTime: 1000 * 30,
     });
 
-    // Upvote mutation (optimistic)
     const upvoteMutation = useMutation({
         mutationFn: ({ id, email }) =>
             API.patch(`/issues/upvote/${id}`, { email }),
@@ -98,11 +93,9 @@ export default function AllIssues() {
         upvoteMutation.mutate({ id: issue._id, email: user.email });
     };
 
-    // Filter + Sort
     const filteredIssues = useMemo(() => {
         let list = [...issues];
 
-        // Priority & boosted first
         list.sort((a, b) => {
             const pa = a.priority === "high" || a.isBoosted ? 1 : 0;
             const pb = b.priority === "high" || b.isBoosted ? 1 : 0;
@@ -126,31 +119,30 @@ export default function AllIssues() {
         return list;
     }, [issues, category, status, priority, search]);
 
-    // Pagination
     const total = filteredIssues.length;
     const pages = Math.ceil(total / perPage);
     const pageItems = filteredIssues.slice((page - 1) * perPage, page * perPage);
 
-    if (isLoading) return <div className="p-6 text-center"><Loading></Loading></div>;
+    if (isLoading) return <div className="p-6 text-center"><Loading /></div>;
     if (isError) return <div className="p-6 text-center text-red-600">{error.message}</div>;
 
     return (
         <div className="bg-gray-100 -mt-10">
-            <div className="max-w-[1400px] mx-auto  py-10">
-                <header className="pb-12 md:pt-5 md:pb-20 text-center px-4">
-                <div className="inline-block px-3 py-1 mb-6 border border-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
-                    All Issues
-                </div>
+            <div className="max-w-[1400px] mx-auto py-10 md:px-0 px-4 sm:px-6">
+                <header className="pb-12 md:pt-5 md:pb-20 text-center">
+                    <div className="inline-block px-3 py-1 mb-6 border border-black/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold">
+                        All Issues
+                    </div>
 
-                <h1 className="text-4xl md:text-6xl lg:text-5xl font-semibold mb-4">
-                    Track, explore, and stay informed about <br /> reported public infrastructure issues.
-                </h1>
-            </header>
+                    <h1 className="text-4xl md:text-6xl lg:text-5xl font-semibold mb-4">
+                        Track, explore, and stay informed about <br /> reported public infrastructure issues.
+                    </h1>
+                </header>
 
                 {/* Filters */}
                 <div className="flex flex-wrap gap-3 mb-6">
                     <input
-                        className="input input-bordered flex-1"
+                        className="input input-bordered flex-1 transition-all duration-300"
                         placeholder="Search issues..."
                         value={search}
                         onChange={e => { setSearch(e.target.value); setPage(1); }}
@@ -175,10 +167,16 @@ export default function AllIssues() {
                 {/* Issues Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {pageItems.map(issue => (
-                        <div key={issue._id} className="bg-white p-4 rounded shadow flex flex-col">
+                        <div
+                            key={issue._id}
+                            className="bg-white p-4 rounded shadow flex flex-col transition-all duration-300 ease-out hover:shadow-lg hover:scale-[1.01]"
+                        >
                             {issue.image && (
-                                <img src={issue.image} alt={issue.title}
-                                    className="h-40 w-full object-cover rounded mb-3" />
+                                <img
+                                    src={issue.image}
+                                    alt={issue.title}
+                                    className="h-40 w-full object-cover rounded mb-3 transition-opacity duration-300"
+                                />
                             )}
 
                             <div className="flex-1">
@@ -206,13 +204,15 @@ export default function AllIssues() {
                             <div className="mt-4 flex justify-between items-center">
                                 <button
                                     onClick={() => handleUpvote(issue)}
-                                    className="btn bg-black/70 text-white hover:text-black hover:bg-white btn-sm py-4">
+                                    className="btn bg-black/70 text-white hover:text-black hover:bg-white btn-sm py-4 transition-all duration-300 active:scale-95"
+                                >
                                     <BiSolidUpvote /> {issue.upvotes || 0}
                                 </button>
 
                                 <Link
                                     to={`/dashboard/issue/${issue._id}`}
-                                    className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4">
+                                    className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4 transition-all duration-300 active:scale-95"
+                                >
                                     View Details
                                 </Link>
                             </div>

@@ -31,6 +31,7 @@ import RoleDashboardRedirect from "../Pages/Dashboard/RoleDashboardRedirect";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import StripeWrapper from "../Pages/Dashboard/Payment/StripeWrapper";
 import SetPassword from "../Pages/AuthPages/SetPassword/SetPassword";
+import PublicRoute from "./PublicRoute";
 
 export const router = createBrowserRouter([
   {
@@ -50,11 +51,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/login",
-        element: <Login />
+        element: <PublicRoute><Login /></PublicRoute> 
       },
       {
         path: "/register",
-        element: <Register />
+        element: <PublicRoute><Register /></PublicRoute> 
       },
       {
         path: "/set-password",

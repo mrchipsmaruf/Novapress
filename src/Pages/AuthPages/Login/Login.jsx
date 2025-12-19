@@ -8,7 +8,7 @@ import axios from "axios";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { googleSignIn, signInUser, user } = UseAuth();
+    const { googleSignIn, signInUser, user, hasPasswordProvider } = UseAuth();
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -21,35 +21,43 @@ const Login = () => {
 
     const isEmptyUser = (obj) => !obj || Object.keys(obj).length === 0;
 
-    const handleGoogleSignIn = () => {
-        googleSignIn()
-            .then(async (result) => {
-                const user = result.user;
+    const handleGoogleSignIn = async () => {
+        try {
+            const result = await googleSignIn();
+            const user = result.user;
 
-                let res = await axios.get(
-                    `https://novapress-server.vercel.app/users/${user.email}`
-                );
+            const hasPassword = await hasPasswordProvider(user.email);
 
-                if (isEmptyUser(res.data)) {
-                    const newUser = {
+            if (!hasPassword) {
+                navigate("/set-password", { replace: true });
+                return;
+            }
+
+            const res = await axios.get(
+                `https://novapress-server.vercel.app/users/${user.email}`
+            );
+
+            if (!res.data || Object.keys(res.data).length === 0) {
+                await axios.post(
+                    "https://novapress-server.vercel.app/users",
+                    {
                         name: user.displayName,
                         email: user.email,
                         photo: user.photoURL,
                         role: "citizen",
                         isBlocked: false,
                         premium: false
-                    };
+                    }
+                );
+            }
 
-                    await axios.post(
-                        "https://novapress-server.vercel.app/users",
-                        newUser
-                    );
-                }
+            navigate("/", { replace: true });
 
-                navigate("/", { replace: true });
-            })
-            .catch(error => console.log(error));
+        } catch (error) {
+            console.error(error);
+        }
     };
+
 
     const handleLogin = async (data) => {
         try {

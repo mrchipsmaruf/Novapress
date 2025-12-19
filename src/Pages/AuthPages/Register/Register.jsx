@@ -31,11 +31,9 @@ const Register = () => {
                 premium: false,
             };
 
-            // ✅ Always attempt to save
-            // Backend will ignore if user already exists
             await saveUserToDB(newUser);
 
-            navigate(location.state || "/");
+            navigate("/set-password");
         } catch (error) {
             console.error("Google registration error:", error);
         }

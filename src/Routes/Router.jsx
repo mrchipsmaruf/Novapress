@@ -30,6 +30,7 @@ import ManageIssues from "../Pages/Dashboard/AdminDashboard/ManageIssues";
 import RoleDashboardRedirect from "../Pages/Dashboard/RoleDashboardRedirect";
 import Profile from "../Pages/Dashboard/Profile/Profile";
 import StripeWrapper from "../Pages/Dashboard/Payment/StripeWrapper";
+import SetPassword from "../Pages/AuthPages/SetPassword/SetPassword";
 
 export const router = createBrowserRouter([
   {
@@ -47,8 +48,18 @@ export const router = createBrowserRouter([
   {
     element: <AuthLayout />,
     children: [
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
+      {
+        path: "/login",
+        element: <Login />
+      },
+      {
+        path: "/register",
+        element: <Register />
+      },
+      {
+        path: "/set-password",
+        element: <SetPassword />
+      }
     ],
   },
   {

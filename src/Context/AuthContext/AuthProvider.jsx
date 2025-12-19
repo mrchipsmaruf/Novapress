@@ -8,8 +8,11 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
-    updateProfile
-} from 'firebase/auth';
+    updateProfile,
+    EmailAuthProvider,
+    linkWithCredential
+} from "firebase/auth";
+import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { auth } from '../../Firebase/Firebase.init';
 
 let googleProvider = new GoogleAuthProvider();
@@ -29,9 +32,28 @@ const AuthProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password);
     };
 
+    const hasPasswordProvider = async (email) => {
+        const methods = await fetchSignInMethodsForEmail(auth, email);
+        return methods.includes("password");
+    };
+
     let signInUser = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
+    };
+
+    const setPasswordForGoogleUser = async (password) => {
+        const user = auth.currentUser;
+
+        if (!user) {
+            throw new Error("No logged-in user");
+        }
+
+        const credential = EmailAuthProvider.credential(
+            user.email,
+            password
+        );
+        return await linkWithCredential(user, credential);
     };
 
     let signOutUser = async () => {
@@ -63,6 +85,8 @@ const AuthProvider = ({ children }) => {
         googleSignIn,
         signOutUser,
         updateUserProfile,
+        setPasswordForGoogleUser,
+        hasPasswordProvider,
     };
 
     return (

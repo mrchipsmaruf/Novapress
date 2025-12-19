@@ -1,16 +1,156 @@
-# React + Vite
+NovaPress – Public Infrastructure Issue Reporting System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🔗 Live Website: https://novapress-infra.vercel.app/
 
-Currently, two official plugins are available:
+NovaPress is a full-stack web application that allows citizens to report public infrastructure issues (such as potholes, broken streetlights, garbage overflow, water leakage, etc.) and enables authorities to manage, verify, and resolve those issues efficiently.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is built as part of B12-A11_category-06 and follows modern best practices for authentication, role-based access control, and responsive UI design.
 
-## React Compiler
+📌 Features
+👤 Authentication & Authorization
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Email & Password authentication
 
-## Expanding the ESLint configuration
+Google OAuth login
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Existing Google users can set password later
+
+JWT-based secure authentication
+
+Logged-in users cannot access login/register pages again
+
+Blocked users are prevented from accessing the system
+
+🧑‍🤝‍🧑 User Roles
+
+Citizen
+
+Submit infrastructure issues
+
+View and manage own issues
+
+Make payments (Stripe)
+
+Manage profile
+
+Staff
+
+View assigned issues
+
+Update issue status
+
+Admin
+
+Manage users
+
+Manage all issues
+
+Full dashboard access
+
+🛠️ Issue Management
+
+Create, view, update, and track issues
+
+Issue status lifecycle
+
+Role-based dashboard routing
+
+Secure issue details (public & dashboard views)
+
+📊 Dashboard System
+
+Dynamic dashboard based on user role
+
+Protected routes (PrivateRoute, AdminRoute, StaffRoute)
+
+Smooth loading state handling
+
+Role-based redirection
+
+💳 Payment Integration
+
+Stripe payment gateway
+
+Secure payment handling
+
+Premium feature support
+
+🎨 UI / UX
+
+Fully responsive design (mobile, tablet, desktop)
+
+Modern UI with Tailwind CSS & DaisyUI
+
+Animated banners and video backgrounds
+
+Clean and user-friendly layout
+
+🧪 Tech Stack
+Frontend
+
+React
+
+React Router DOM
+
+Tailwind CSS
+
+DaisyUI
+
+React Hook Form
+
+TanStack React Query
+
+Axios
+
+Swiper.js
+
+Firebase Authentication
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+Firebase Admin SDK
+
+JWT Authentication
+
+Payment
+
+Stripe
+
+🔐 Security Features
+
+JWT token validation
+
+Role-based route protection
+
+Secure API endpoints
+
+Environment variable protection
+
+Firebase Admin token verification
+
+
+✅ Key Highlights
+
+Google users can later log in with email/password
+
+Public & private route separation
+
+Clean role-based dashboard system
+
+Production-ready authentication flow
+
+Fully responsive & modern UI
+
+Real-world use case focused
+
+
+👨‍💻 Developer
+
+Name: Al Maruf
+Project: NovaPress

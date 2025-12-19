@@ -110,7 +110,7 @@ const Footer = () => {
 
         {/* Big Logo Text */}
         <div className="w-full flex items-center justify-center overflow-hidden py-0">
-          <h1 className="logoText font-bold text-[70px] sm:text-[140px] md:text-[200px] lg:text-[245px] text-black dark:text-white text-center leading-none">
+          <h1 className="logoText font-bold text-[60px] sm:text-[140px] md:text-[200px] lg:text-[245px] text-black dark:text-white text-center leading-none">
             NOVAPRESS
           </h1>
         </div>

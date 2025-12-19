@@ -134,7 +134,7 @@ const DashboardLayout = () => {
                     </div>
                     <label
                         htmlFor="dashboard-drawer"
-                        className="btn btn-primary drawer-button lg:hidden"
+                        className="btn bg-black text-white hover:text-black hover:bg-white btn-sm md:hidden lg:hidden py-5 drawer-button"
                     >
                         Menu
                     </label>

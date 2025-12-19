@@ -16,12 +16,6 @@ NovaPress is a full-stack web application that allows citizens to report public 
 
 The platform enables authorities to manage, verify, and resolve reported issues efficiently.
 
-This project is built as part of **B12-A11_category-06** and follows modern best practices for:
-- Authentication  
-- Role-based access control  
-- Responsive UI design  
-
----
 
 ## 🔐 Authentication & Authorization
 

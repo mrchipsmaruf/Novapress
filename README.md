@@ -1,156 +1,132 @@
-NovaPress – Public Infrastructure Issue Reporting System
+# 🏙️ NovaPress – Public Infrastructure Issue Reporting System
 
-🔗 Live Website: https://novapress-infra.vercel.app/
+🔗 **Live Website:**  
+👉 https://novapress-infra.vercel.app/
 
-NovaPress is a full-stack web application that allows citizens to report public infrastructure issues (such as potholes, broken streetlights, garbage overflow, water leakage, etc.) and enables authorities to manage, verify, and resolve those issues efficiently.
+---
 
-This project is built as part of B12-A11_category-06 and follows modern best practices for authentication, role-based access control, and responsive UI design.
+## 📌 Project Overview
 
-📌 Features
-👤 Authentication & Authorization
+NovaPress is a full-stack web application that allows citizens to report public infrastructure issues such as:
 
-Email & Password authentication
+- Potholes  
+- Broken streetlights  
+- Garbage overflow  
+- Water leakage  
 
-Google OAuth login
+The platform enables authorities to manage, verify, and resolve reported issues efficiently.
 
-Existing Google users can set password later
+This project is built as part of **B12-A11_category-06** and follows modern best practices for:
+- Authentication  
+- Role-based access control  
+- Responsive UI design  
 
-JWT-based secure authentication
+---
 
-Logged-in users cannot access login/register pages again
+## 🔐 Authentication & Authorization
 
-Blocked users are prevented from accessing the system
+- Email & Password authentication  
+- Google OAuth login  
+- Existing Google users can set a password later  
+- JWT-based secure authentication  
+- Logged-in users cannot access login/register pages again  
+- Blocked users are prevented from accessing the system  
 
-🧑‍🤝‍🧑 User Roles
+---
 
-Citizen
+## 👥 User Roles
 
-Submit infrastructure issues
+### 👤 Citizen
+- Submit infrastructure issues  
+- View and manage own issues  
+- Make payments (Stripe)  
+- Manage profile  
 
-View and manage own issues
+### 🛠️ Staff
+- View assigned issues  
+- Update issue status  
 
-Make payments (Stripe)
+### 🛡️ Admin
+- Manage users  
+- Manage all reported issues  
+- Full administrative dashboard access  
 
-Manage profile
+---
 
-Staff
+## 🛠️ Issue Management
 
-View assigned issues
+- Create, view, update, and track issues  
+- Issue status lifecycle management  
+- Public & dashboard issue views  
+- Secure issue access based on role  
 
-Update issue status
+---
 
-Admin
+## 📊 Dashboard System
 
-Manage users
+- Role-based dashboard routing  
+- PrivateRoute, AdminRoute, and StaffRoute protection  
+- Automatic redirection based on user role  
+- Smooth loading state handling  
 
-Manage all issues
+---
 
-Full dashboard access
+## 💳 Payment Integration
 
-🛠️ Issue Management
+- Stripe payment gateway  
+- Secure payment processing  
+- Premium feature support  
 
-Create, view, update, and track issues
+---
 
-Issue status lifecycle
+## 🎨 UI / UX
 
-Role-based dashboard routing
+- Fully responsive design (mobile, tablet, desktop)  
+- Tailwind CSS & DaisyUI styling  
+- Animated banners and background videos  
+- Clean and modern user interface  
 
-Secure issue details (public & dashboard views)
+---
 
-📊 Dashboard System
+## 🧪 Tech Stack
 
-Dynamic dashboard based on user role
+### Frontend
+- React  
+- React Router DOM  
+- Tailwind CSS  
+- DaisyUI  
+- React Hook Form  
+- TanStack React Query  
+- Axios  
+- Firebase Authentication  
 
-Protected routes (PrivateRoute, AdminRoute, StaffRoute)
+### Backend
+- Node.js  
+- Express.js  
+- MongoDB  
+- Firebase Admin SDK  
+- JWT Authentication  
 
-Smooth loading state handling
+### Payment
+- Stripe  
 
-Role-based redirection
 
-💳 Payment Integration
+---
 
-Stripe payment gateway
+## ✅ Key Highlights
 
-Secure payment handling
+- Google users can later log in using email & password  
+- Secure role-based routing  
+- Clean dashboard separation  
+- Production-ready authentication flow  
+- Real-world problem-solving application  
 
-Premium feature support
+---
 
-🎨 UI / UX
 
-Fully responsive design (mobile, tablet, desktop)
+## 👨‍💻 Developer
 
-Modern UI with Tailwind CSS & DaisyUI
+**Name:** Al Maruf  
+**Project:** NovaPress  
 
-Animated banners and video backgrounds
-
-Clean and user-friendly layout
-
-🧪 Tech Stack
-Frontend
-
-React
-
-React Router DOM
-
-Tailwind CSS
-
-DaisyUI
-
-React Hook Form
-
-TanStack React Query
-
-Axios
-
-Swiper.js
-
-Firebase Authentication
-
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB
-
-Firebase Admin SDK
-
-JWT Authentication
-
-Payment
-
-Stripe
-
-🔐 Security Features
-
-JWT token validation
-
-Role-based route protection
-
-Secure API endpoints
-
-Environment variable protection
-
-Firebase Admin token verification
-
-
-✅ Key Highlights
-
-Google users can later log in with email/password
-
-Public & private route separation
-
-Clean role-based dashboard system
-
-Production-ready authentication flow
-
-Fully responsive & modern UI
-
-Real-world use case focused
-
-
-👨‍💻 Developer
-
-Name: Al Maruf
-Project: NovaPress
+---

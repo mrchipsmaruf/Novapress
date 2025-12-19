@@ -3,8 +3,10 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import Loading from "../../../Components/Loading/Loading";
 
+
 const ManageUsers = () => {
     const axiosSecure = useAxiosSecure();
+
 
     // Fetch all users
     const { data: users = [], refetch, isLoading } = useQuery({
@@ -60,37 +62,39 @@ const ManageUsers = () => {
                     </thead>
 
                     <tbody>
-                        {users.map((u, index) => (
-                            <tr key={u._id} className="hover">
-                                <td>{index + 1}</td>
-                                <td>{u.name}</td>
-                                <td>{u.email}</td>
-                                <td className="font-semibold">{u.role}</td>
-                                <td>{u.premium ? "Yes" : "No"}</td>
-                                <td>{u.isBlocked ? "Blocked" : "Active"}</td>
+                        {users
+                            .filter(u => u.role !== "admin")
+                            .map((u, index) => (
+                                <tr key={u._id} className="hover">
+                                    <td>{index + 1}</td>
+                                    <td>{u.name}</td>
+                                    <td>{u.email}</td>
+                                    <td className="font-semibold">{u.role}</td>
+                                    <td>{u.premium ? "Yes" : "No"}</td>
+                                    <td>{u.isBlocked ? "Blocked" : "Active"}</td>
 
-                                <td className="space-x-2">
-                                    {/* Make Staff */}
-                                    {u.role !== "staff" && (
+                                    <td className="space-x-2">
+                                        {/* Make Staff */}
+                                        {u.role === "citizen" && (
+                                            <button
+                                                onClick={() => makeStaff(u.email)}
+                                                className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4"
+                                            >
+                                                Make Staff
+                                            </button>
+                                        )}
+
+                                        {/* Block/Unblock */}
                                         <button
-                                            onClick={() => makeStaff(u.email)}
-                                            className="btn bg-black text-white hover:text-black hover:bg-white btn-sm py-4"
+                                            onClick={() => toggleBlock(u.email, u.isBlocked)}
+                                            className={`btn btn-sm ${u.isBlocked ? "bg-green-500" : "bg-red-500"
+                                                } text-white`}
                                         >
-                                            Make Staff
+                                            {u.isBlocked ? "Unblock" : "Block"}
                                         </button>
-                                    )}
-
-                                    {/* Block/Unblock */}
-                                    <button
-                                        onClick={() => toggleBlock(u.email, u.isBlocked)}
-                                        className={`btn btn-sm ${u.isBlocked ? "bg-green-500" : "bg-red-500"
-                                            } text-white`}
-                                    >
-                                        {u.isBlocked ? "Unblock" : "Block"}
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>

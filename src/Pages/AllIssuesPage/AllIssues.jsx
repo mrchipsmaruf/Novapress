@@ -37,7 +37,7 @@ export default function AllIssues() {
 
     const upvoteMutation = useMutation({
         mutationFn: ({ id, email }) =>
-            API.patch(`/issues/upvote/${id}`, { email }),
+            axiosSecure.patch(`/issues/upvote/${id}`, { email }),
 
         onMutate: async ({ id, email }) => {
             await queryClient.cancelQueries(["allIssues"]);

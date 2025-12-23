@@ -3,16 +3,20 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import axiosSecure from "../../../Services/axiosSecure";
 import Loading from "../../../Components/Loading/Loading";
+import UseAuth from "../../../Hooks/UseAuth";
 
 const ResolvedIssues = () => {
+
+    const { loading } = UseAuth();
+
     const { data: issues = [], isLoading } = useQuery({
         queryKey: ["resolvedIssuesHome"],
+        enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure.get("https://novapress-server.vercel.app/issues");
+            const res = await axiosSecure.get("/issues");
             return res.data || [];
         },
-        staleTime: 1000 * 60,      // cache 1 minute
-        refetchOnWindowFocus: false, // prevent re-render on scroll/tab focus
+        staleTime: 1000 * 60 * 5,
     });
 
     const resolvedIssues = useMemo(() => {

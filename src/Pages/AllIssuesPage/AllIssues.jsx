@@ -12,7 +12,7 @@ const statuses = ["Status", "Pending", "In-Progress", "Resolved", "Closed"];
 const priorities = ["Priority", "high", "normal"];
 
 export default function AllIssues() {
-    const { user } = UseAuth();
+    const { user, loading } = UseAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
@@ -26,11 +26,13 @@ export default function AllIssues() {
 
     const { data: issues = [], isLoading, isError, error } = useQuery({
         queryKey: ["allIssues"],
+        enabled: !loading,
         queryFn: async () => {
             const res = await API.get("/issues");
             return res.data || [];
         },
-        staleTime: 1000 * 30,
+        staleTime: 1000 * 60 * 2,
+        keepPreviousData: true,
     });
 
     const upvoteMutation = useMutation({

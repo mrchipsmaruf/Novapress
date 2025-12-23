@@ -6,7 +6,6 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContai
 const AdminRevenue = () => {
     const axiosSecure = useAxiosSecure();
 
-    // GET REVENUE DATA
     const { data, isLoading } = useQuery({
         queryKey: ["adminRevenue"],
         queryFn: async () => {

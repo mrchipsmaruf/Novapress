@@ -11,6 +11,7 @@ import { FaUsers } from "react-icons/fa";
 import { MdManageSearch } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
+import Loading from "../Components/Loading/Loading";
 
 const activeClass =
     "bg-black/50 text-white font-semibold rounded-lg";
@@ -19,7 +20,11 @@ const inactiveClass =
 
 const DashboardLayout = () => {
     const { signOutUser } = UseAuth();
-    const { role } = useRole();
+    const { role, roleLoading } = useRole();
+
+    if (roleLoading) {
+        return <Loading></Loading> ;
+    }
 
     const citizenMenu = (
         <>

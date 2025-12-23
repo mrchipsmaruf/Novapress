@@ -2,19 +2,23 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Loading from "../../../Components/Loading/Loading";
+import useRole from "../../../Hooks/useRole";
 
 const AdminDashboard = () => {
     const axiosSecure = useAxiosSecure();
+    const { role, roleLoading } = useRole();
+
 
     const { data: stats = {}, isLoading } = useQuery({
         queryKey: ["adminStats"],
+        enabled: !roleLoading && role === "admin",
         queryFn: async () => {
             const res = await axiosSecure.get("/dashboard/admin/stats");
             return res.data;
         }
     });
 
-    if (isLoading) return <Loading />;
+    if (roleLoading || isLoading) return <Loading />;
 
     const { users, issues, payments, staffPerformance, activeCitizens, latestResolved } = stats;
 

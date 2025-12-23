@@ -2,10 +2,10 @@ import React, { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import API from "../../Services/axiosSecure";
 import UseAuth from "../../Hooks/UseAuth";
 import Loading from "../../Components/Loading/Loading";
 import { BiSolidUpvote } from "react-icons/bi";
+import axiosSecure from "../../Services/axiosSecure";
 
 const categories = ["Category", "Road", "Electricity", "Water", "Garbage", "Footpath", "Drainage", "Other"];
 const statuses = ["Status", "Pending", "In-Progress", "Resolved", "Closed"];
@@ -28,7 +28,7 @@ export default function AllIssues() {
         queryKey: ["allIssues"],
         enabled: !loading,
         queryFn: async () => {
-            const res = await API.get("/issues");
+            const res = await axiosSecure.get("/issues");
             return res.data || [];
         },
         staleTime: 1000 * 60 * 2,

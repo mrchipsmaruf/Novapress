@@ -5,14 +5,18 @@ import Swal from "sweetalert2";
 import UseAuth from "../../Hooks/UseAuth";
 import Loading from "../../Components/Loading/Loading";
 import { BiSolidUpvote } from "react-icons/bi";
-import axiosSecure from "../../Services/axiosSecure";
+import axios from "axios";
 
 const categories = ["Category", "Road", "Electricity", "Water", "Garbage", "Footpath", "Drainage", "Other"];
 const statuses = ["Status", "Pending", "In-Progress", "Resolved", "Closed"];
 const priorities = ["Priority", "high", "normal"];
 
+const axiosPublic = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+});
+
 export default function AllIssues() {
-    const { user, loading } = UseAuth();
+    const { user } = UseAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
@@ -26,9 +30,8 @@ export default function AllIssues() {
 
     const { data: issues = [], isLoading, isError, error } = useQuery({
         queryKey: ["allIssues"],
-        enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure.get("/issues");
+            const res = await axiosPublic.get("/issues");
             return res.data || [];
         },
         staleTime: 1000 * 60 * 2,
@@ -37,7 +40,7 @@ export default function AllIssues() {
 
     const upvoteMutation = useMutation({
         mutationFn: ({ id, email }) =>
-            axiosSecure.patch(`/issues/upvote/${id}`, { email }),
+            axios.patch(`/issues/upvote/${id}`, { email }),
 
         onMutate: async ({ id, email }) => {
             await queryClient.cancelQueries(["allIssues"]);

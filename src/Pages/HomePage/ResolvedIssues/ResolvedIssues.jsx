@@ -1,19 +1,20 @@
 import React, { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import axiosSecure from "../../../Services/axiosSecure";
 import Loading from "../../../Components/Loading/Loading";
 import UseAuth from "../../../Hooks/UseAuth";
+import axios from "axios";
+
+const axiosPublic = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+});
 
 const ResolvedIssues = () => {
 
-    const { loading } = UseAuth();
-
     const { data: issues = [], isLoading } = useQuery({
         queryKey: ["resolvedIssuesHome"],
-        enabled: !loading,
         queryFn: async () => {
-            const res = await axiosSecure.get("/issues");
+            const res = await axiosPublic.get("/issues");
             return res.data || [];
         },
         staleTime: 1000 * 60 * 5,
